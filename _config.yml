@@ -1,5 +1,7 @@
 # The Site Configuration
 #11
+sass:
+  sass_dir: assets/css
 # Import the theme
 theme: jekyll-theme-chirpy
 
@@ -32,6 +34,13 @@ github:
 
 #twitter:
   #username:  # change to your Twitter username
+
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: highlight
+    line_numbers: true
 
 social:
   # Change to your full name.
@@ -74,6 +83,8 @@ analytics:
     id: # fill in your Cloudflare Web Analytics token
   fathom:
     id: # fill in your Fathom Site ID
+
+
 
 # Page views settings
 pageviews:

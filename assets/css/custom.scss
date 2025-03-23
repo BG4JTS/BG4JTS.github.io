@@ -1,0 +1,58 @@
+// 代码块换行
+.highlight pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
+  padding: 1.2rem;
+  border-radius: 8px;
+  background: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+// 代码字体优化
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.92em;
+}
+
+/* 强制代码换行 */
+.highlight pre {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  padding: 1.2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+/* 代码字体和行内样式 */
+code {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 0.92em;
+  background: rgba(175, 184, 193, 0.15) !important;
+}
+
+/* 代码块容器 */
+.language-javascript.highlighter-rouge {
+  .highlight {
+    pre {
+      white-space: pre-wrap !important;
+      word-wrap: break-word !important;
+      background: #2d2d2d; /* 深色背景 */
+      code {
+        color: #f8f8f2 !important; /* 代码字体颜色 */
+        font-family: 'JetBrains Mono', monospace !important;
+      }
+    }
+  }
+}
+
+/* 代码头栏优化 */
+.code-header {
+  background: #1e1e1e !important;
+  border-radius: 6px 6px 0 0 !important;
+  padding: 0.5rem 1rem !important;
+  span[data-label-text] {
+    color: #9cdcfe !important; /* 语言标签颜色 */
+  }
+}
