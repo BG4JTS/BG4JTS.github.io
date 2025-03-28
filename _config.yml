@@ -254,8 +254,8 @@ assets:
   destination: "/assets"
   compression: false
 
-kramdown:
-  input: GFM
+#kramdown:
+  #input: GFM
 
   plugins:
 # #  - jekyll-multiple-languages-plugin
