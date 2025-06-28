@@ -125,3 +125,19 @@ permalink: /404.html
   </p>
   <a href="https://bg4jts.github.io/" class="home-link">Back to Home</a>
 </div>
+
+<script>
+  (function() {
+    const path = window.location.pathname;
+    // 匹配 /graduation_commemoration/ followed by one or more digits
+    const match = path.match(/^\/graduation_commemoration\/(\d+)$/);
+
+    if (match && match[1]) {
+      const id = match[1];
+      // 重定向到学生页面，并带上ID
+      // 使用相对路径，以确保在本地和线上都能正常工作
+      window.location.href = `/graduation_commemoration/student?id=${id}`;
+    }
+    // 如果路径不匹配，则什么也不做，正常显示404页面
+  })();
+</script>

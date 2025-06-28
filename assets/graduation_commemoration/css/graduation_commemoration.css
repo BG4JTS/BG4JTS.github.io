@@ -1,0 +1,60 @@
+yybody {
+  background: #f7fafc;
+  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 400px;
+  margin: 80px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 40px 30px 30px 30px;
+  text-align: center;
+}
+h1 {
+  color: #2d6cdf;
+  margin-bottom: 24px;
+}
+.blessing {
+  color: #444;
+  font-size: 1.1em;
+  margin-bottom: 32px;
+}
+input[type="text"] {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1em;
+  width: 80px;
+  margin-right: 10px;
+}
+button {
+  background: #2d6cdf;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button:hover {
+  background: #1a4fa0;
+}
+.error {
+  color: #e53e3e;
+  margin-top: 12px;
+}
+.back-link {
+  display: inline-block;
+  margin-top: 24px;
+  color: #2d6cdf;
+  text-decoration: none;
+  font-size: 1em;
+  transition: color 0.2s;
+}
+.back-link:hover {
+  color: #1a4fa0;
+}

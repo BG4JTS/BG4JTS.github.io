@@ -1,0 +1,260 @@
+---
+layout: none
+permalink: /graduation_commemoration/student
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小学毕业纪念</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/graduation_commemoration.css">
+  <style>
+    body {
+      background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+      min-height: 100vh;
+      margin: 0;
+    }
+    .navbar {
+      width: 100%;
+      background: rgba(255,255,255,0.85);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      padding: 16px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0 0 18px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .navbar-title {
+      font-size: 1.3em;
+      color: #2d6cdf;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+    .blessing-card {
+      background: rgba(255,255,255,0.95);
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 32px 28px;
+      margin: 40px auto 24px auto;
+      max-width: 420px;
+      min-width: 220px;
+      font-size: 1.15em;
+      color: #2d6cdf;
+      text-align: center;
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+    .blessing-card:hover {
+      box-shadow: 0 8px 32px rgba(45,108,223,0.12);
+      transform: scale(1.04) rotate(-2deg);
+    }
+    .random-btn {
+      margin: 0 auto 24px auto;
+      display: block;
+      background: linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 32px;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(45,108,223,0.08);
+      transition: background 0.2s;
+    }
+    .random-btn:hover {
+      background: linear-gradient(90deg, #c2e9fb 0%, #a1c4fd 100%);
+    }
+    .message-board {
+      background: rgba(255,255,255,0.85);
+      border-radius: 16px;
+      max-width: 480px;
+      margin: 32px auto 0 auto;
+      padding: 24px 18px 18px 18px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .message-board h2 {
+      color: #2d6cdf;
+      font-size: 1.1em;
+      margin-bottom: 12px;
+    }
+    .message-list {
+      min-height: 32px;
+      margin-bottom: 12px;
+      color: #444;
+      font-size: 1em;
+    }
+    .message-input {
+      width: 80%;
+      padding: 8px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1em;
+      margin-right: 8px;
+    }
+    .message-send {
+      background: #2d6cdf;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .message-send:hover {
+      background: #1a4fa0;
+    }
+    .chat-input-group {
+      margin-top: 10px;
+    }
+    .chat-nickname-input {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      color: #1f2937;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+    .chat-nickname-input:focus {
+        outline: none;
+        border-color: #0072ff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-icon">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <div class="logo-text">小学毕业纪念</div>
+    </div>
+    <div class="nav-links">
+      <a href="#" class="nav-link active">首页</a>
+    </div>
+  </header>
+  <div class="container">
+    <section class="hero">
+      <div class="year-badge">毕业纪念</div>
+      <h1>珍藏童年记忆<br>启航崭新征程</h1>
+      <p>六年的小学时光如白驹过隙，我们在这里欢笑、成长、收获。这本数字纪念册将永远珍藏我们最美好的童年回忆。</p>
+      <button class="btn" onclick="window.scrollTo({top: document.querySelector('.dashboard').offsetTop-40, behavior: 'smooth'});">
+        <i class="fas fa-magic"></i> 开启毕业之旅
+      </button>
+    </section>
+    <div class="dashboard">
+      <!-- 聊天室卡片（本地存储消息） -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">班级聊天室</h2>
+          <div class="card-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); text-align: center; margin-bottom: 20px;">请不要传播暴力、色情、种族，等不友善言论。如出现任何不良影响，后果自负！请注意您的隐私安全，您发送的信息将会被公开</p>
+        <div class="chat-container">
+          <div class="chat-messages" id="chatMessages"></div>
+          <div class="chat-input-group">
+            <input type="text" id="nicknameInput" placeholder="输入你的昵称..." class="chat-nickname-input">
+            <div class="chat-input">
+              <input type="text" id="chatInput" placeholder="输入消息...">
+              <button id="chatSendBtn">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 记忆游戏卡片 -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">毕业记忆翻牌</h2>
+          <div class="card-icon">
+            <i class="fas fa-gamepad"></i>
+          </div>
+        </div>
+        <div class="memory-game"></div>
+        <div class="game-stats">
+          <div class="stat">
+            <div class="stat-value" id="moves">0</div>
+            <div class="stat-label">步数</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="timer">60</div>
+            <div class="stat-label">时间</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value" id="matches">0</div>
+            <div class="stat-label">匹配</div>
+          </div>
+        </div>
+      </div>
+      <!-- 赠言生成器卡片 -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">毕业赠言生成</h2>
+          <div class="card-icon">
+            <i class="fas fa-quote-right"></i>
+          </div>
+        </div>
+        <p>生成专属毕业赠言，送给老师和同学</p>
+        <div class="wish-generator">
+          <div id="wish-text">点击按钮获取一条温馨的毕业祝福</div>
+          <button class="btn" id="generate-wish">
+            <i class="fas fa-magic"></i> 生成赠言
+          </button>
+        </div>
+      </div>
+      <!-- 联系方式卡片 -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">我的联系方式</h2>
+          <div class="card-icon">
+            <i class="fas fa-address-card"></i>
+          </div>
+        </div>
+        <div style="text-align:center; margin: 30px 0;">
+          <button class="btn" onclick="window.location.href='graduation_commemoration/contact_information.html'">
+            <i class="fas fa-paper-plane"></i> 查看联系方式
+          </button>
+        </div>
+      </div>
+      <!-- 我的博客卡片 -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">我的博客</h2>
+          <div class="card-icon">
+            <i class="fas fa-blog"></i>
+          </div>
+        </div>
+        <div style="text-align:center; margin: 30px 0;">
+          <button class="btn" onclick="window.open('https://bg4jts.github.io/', '_blank')">
+            <i class="fas fa-rocket"></i> 点击前往博客
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-content">
+      <div class="logo" style="justify-content: center; margin-bottom: 20px;">
+        <div class="logo-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="logo-text">小学毕业纪念</div>
+      </div>
+      <p style="color: var(--text-muted); margin-top: 30px;" id="user-id-display">© 2023 小学毕业纪念</p>
+    </div>
+  </footer>
+  <script src="js/graduation_commemoration.js"></script>
+</body>
+</html>
