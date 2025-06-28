@@ -1,43 +1,33 @@
-# Chirpy Starter
+# 小学毕业纪念页面
 
-[![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
+这是一个为小学毕业创建的交互式纪念网页。
 
-When installing the [**Chirpy**][chirpy] theme through [RubyGems.org][gem], Jekyll can only read files in the folders
-`_data`, `_layouts`, `_includes`, `_sass` and `assets`, as well as a small part of options of the `_config.yml` file
-from the theme's gem. If you have ever installed this theme gem, you can use the command
-`bundle info --path jekyll-theme-chirpy` to locate these files.
+## 功能
 
-The Jekyll team claims that this is to leave the ball in the user’s court, but this also results in users not being
-able to enjoy the out-of-the-box experience when using feature-rich themes.
+*   **动态身份显示**: 根据访问链接的ID，显示为教师或学生身份。
+*   **本地聊天室**: 一个使用浏览器`localStorage`的简单聊天室，可以设置昵称并发送消息。
+*   **毕业记忆翻牌**: 一个简单的翻牌配对小游戏。
+*   **毕业赠言生成器**: 随机生成一条毕业赠言。
+*   **联系方式 & 博客**: 展示个人联系方式和博客链接。
 
-To fully use all the features of **Chirpy**, you need to copy the other critical files from the theme's gem to your
-Jekyll site. The following is a list of targets:
+## 使用方法
 
-```shell
-.
-├── _config.yml
-├── _plugins
-├── _tabs
-└── index.html
-```
+### 访问
 
-To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
-latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
+直接访问主页会默认显示学生页面。
 
-## Usage
+要以特定身份访问，请使用以下格式的链接：
 
-Check out the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki).
+`https://bg4jts.github.io/graduation_commemoration/XX`
 
-## Contributing
+其中 `XX` 是您的编号:
+*   **1-3**: 教师身份
+*   **4-20**: 学生身份
 
-This repository is automatically updated with new releases from the theme repository. If you encounter any issues or want to contribute to its improvement, please visit the [theme repository][chirpy] to provide feedback.
+例如:
+*   `https://bg4jts.github.io/graduation_commemoration/02` (教师)
+*   `https://bg4jts.github.io/graduation_commemoration/15` (学生)
 
-## License
+### 部署
 
-This work is published under [MIT][mit] License.
-
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+这是一个基于Jekyll的静态网站，部署在GitHub Pages上。所有更改推送到`main`分支后会自动部署。

@@ -1,4 +1,4 @@
-window.addEventListener('DOMContentLoaded', () => {
+$(document).ready(function () {
   // 毕业赠言生成器
   const wishes = [
     "愿你们像颗种子，勇敢地冲破泥沙，将嫩绿的幼芽伸出地面，指向天空。",
@@ -12,13 +12,12 @@ window.addEventListener('DOMContentLoaded', () => {
     "希望是坚韧的拐杖，忍耐是旅行袋，带上他们，你可以登上永恒之旅，走遍全世界。",
     "不要学花儿只把春天等待，要学燕子把春天衔来。"
   ];
-  document.getElementById('generate-wish').addEventListener('click', function () {
-    const wishElement = document.getElementById('wish-text');
+  $('#generate-wish').on('click', function () {
+    const $wishElement = $('#wish-text');
     const randomIndex = Math.floor(Math.random() * wishes.length);
-    wishElement.textContent = wishes[randomIndex];
-    wishElement.classList.add('pulse');
+    $wishElement.text(wishes[randomIndex]).addClass('pulse');
     setTimeout(() => {
-      wishElement.classList.remove('pulse');
+      $wishElement.removeClass('pulse');
     }, 1000);
   });
 
@@ -93,7 +92,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   function flipCard() {
-    // `this` refers to the clicked card element
     if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
       this.classList.add('flipped');
       flippedCards.push(this);
@@ -135,79 +133,69 @@ window.addEventListener('DOMContentLoaded', () => {
   // Initialize the game when the DOM is ready
   initGame();
 
-  // --- 聊天室 & 动态ID显示逻辑 (从 student.html 迁移过来) ---
-
-  // 聊天室本地存储
+  // --- 聊天室逻辑 (使用jQuery重构) ---
   function renderChat() {
-    const chatBox = document.getElementById('chatMessages');
-    // 如果找不到聊天框，直接返回，避免错误
-    if (!chatBox) return;
+    const $chatBox = $('#chatMessages');
+    if (!$chatBox.length) return;
 
-    const chatMessages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
+    // 从localStorage获取消息，如果不存在则返回空数组
+    const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
 
     // 清空现有消息
-    chatBox.innerHTML = '';
+    $chatBox.empty();
 
-    // 安全地渲染消息
-    chatMessages.forEach(m => {
-      const messageWrapper = document.createElement('div');
-      messageWrapper.className = 'message sent';
+    // 遍历并安全地渲染消息
+    messages.forEach(function (m) {
+      const $sender = $('<div>', { class: 'message-sender' }).text(m.nickname || '匿名');
+      const $message = $('<div>').text(m.message);
+      const $messageWrapper = $('<div>', { class: 'message sent' })
+        .append($sender)
+        .append($message);
 
-      const senderDiv = document.createElement('div');
-      senderDiv.className = 'message-sender';
-      // 安全地设置昵称
-      senderDiv.textContent = m.nickname || '匿名';
-
-      const messageDiv = document.createElement('div');
-      // 安全地设置消息内容
-      messageDiv.textContent = m.message;
-
-      messageWrapper.appendChild(senderDiv);
-      messageWrapper.appendChild(messageDiv);
-      chatBox.appendChild(messageWrapper);
+      $chatBox.append($messageWrapper);
     });
 
     // 自动滚动到底部
-    chatBox.scrollTop = chatBox.scrollHeight;
+    $chatBox.scrollTop($chatBox[0].scrollHeight);
   }
 
   function setupChat() {
-    const sendBtn = document.getElementById('chatSendBtn');
-    const messageInput = document.getElementById('chatInput');
-    const nicknameInput = document.getElementById('nicknameInput');
+    const $sendBtn = $('#chatSendBtn');
+    const $messageInput = $('#chatInput');
+    const $nicknameInput = $('#nicknameInput');
 
-    if (!sendBtn || !messageInput || !nicknameInput) return;
+    if (!$sendBtn.length || !$messageInput.length || !$nicknameInput.length) return;
 
-    const sendMessage = () => {
-      const message = messageInput.value.trim();
-      const nickname = nicknameInput.value.trim() || '匿名'; // 默认 '匿名'
+    const sendMessage = function () {
+      const message = $messageInput.val().trim();
+      const nickname = $nicknameInput.val().trim() || '匿名';
+
       if (message) {
         const messages = JSON.parse(localStorage.getItem('chatMessages') || '[]');
-        messages.push({ nickname, message });
-        // 添加try-catch以应对localStorage可能写满或禁用的情况
+        messages.push({ nickname: nickname, message: message });
+
         try {
           localStorage.setItem('chatMessages', JSON.stringify(messages));
         } catch (e) {
           console.error("无法保存消息到 localStorage:", e);
           alert("无法保存新消息，存储可能已满或被禁用。");
         }
-        messageInput.value = '';
+
+        $messageInput.val('');
         renderChat();
       }
     };
 
-    sendBtn.onclick = sendMessage;
-    messageInput.addEventListener('keypress', function (e) {
-      if (e.key === 'Enter') {
+    $sendBtn.on('click', sendMessage);
+    $messageInput.on('keypress', function (e) {
+      if (e.which === 13) { // 13是回车键
         sendMessage();
       }
     });
 
-    // 页面加载时渲染一次
     renderChat();
   }
   setupChat();
-
 
   // 根据URL参数动态设置用户ID
   function setupUserId() {
@@ -216,11 +204,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
-    let displayText = '© 2023 小学毕业纪念';
+    let displayText = '© 2025 小学毕业纪念';
 
     if (id) {
       const numericId = parseInt(id, 10);
-      // 检查id是否为有效数字
       if (!isNaN(numericId)) {
         const paddedId = id.padStart(2, '0');
         if (numericId >= 1 && numericId <= 3) {
@@ -233,5 +220,4 @@ window.addEventListener('DOMContentLoaded', () => {
     idDisplay.textContent = displayText;
   }
   setupUserId();
-
 });
