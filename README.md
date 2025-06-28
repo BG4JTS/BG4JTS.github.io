@@ -5,7 +5,7 @@
 ## 功能
 
 *   **动态身份显示**: 根据访问链接的ID，显示为教师或学生身份。
-*   **本地聊天室**: 一个使用浏览器`localStorage`的简单聊天室，可以设置昵称并发送消息。
+*   **Waline在线留言板**: 一个功能强大的在线留言系统，支持匿名留言和表情回复。
 *   **毕业记忆翻牌**: 一个简单的翻牌配对小游戏。
 *   **毕业赠言生成器**: 随机生成一条毕业赠言。
 *   **联系方式 & 博客**: 展示个人联系方式和博客链接。
@@ -18,15 +18,15 @@
 
 要以特定身份访问，请使用以下格式的链接：
 
-`https://bg4jts.github.io/graduation_commemoration/XX`
+`https://bg4jts.dpdns.org/graduation_commemoration/XX`
 
 其中 `XX` 是您的编号:
 *   **1-3**: 教师身份
 *   **4-20**: 学生身份
 
 例如:
-*   `https://bg4jts.github.io/graduation_commemoration/02` (教师)
-*   `https://bg4jts.github.io/graduation_commemoration/15` (学生)
+*   `https://bg4jts.dpdns.org/graduation_commemoration/02` (教师)
+*   `https://bg4jts.dpdns.org/graduation_commemoration/15` (学生)
 
 ### 部署
 
