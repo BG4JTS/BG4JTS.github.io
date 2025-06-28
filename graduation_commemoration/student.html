@@ -13,7 +13,7 @@ permalink: /graduation_commemoration/student
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/graduation_commemoration.css">
-  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@waline/client@v3/dist/waline.css" />
   <style>
     body {
       background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
@@ -251,7 +251,7 @@ permalink: /graduation_commemoration/student
   </footer>
   <script src="js/graduation_commemoration.js?v=5"></script>
   <script type="module">
-    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+    import { init } from 'https://cdn.jsdelivr.net/npm/@waline/client@v3/dist/waline.js';
 
     init({
       el: '#waline',
@@ -263,7 +263,7 @@ permalink: /graduation_commemoration/student
       requiredMeta: ['nick'],
       lang: 'zh-CN',
       emoji: [
-        '//unpkg.com/@waline/emojis@1.2.0/weibo',
+        'https://cdn.jsdelivr.net/npm/@waline/emojis@1.2.0/weibo',
       ],
     });
   </script>
