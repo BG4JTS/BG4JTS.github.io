@@ -25,26 +25,13 @@ $(document).ready(function () {
   function setupRedirect() {
     const redirectUrl = 'https://bg4jts.dpdns.org/';
     const $button = $('#agree-and-redirect');
-    const $countdown = $('#redirect-countdown');
-    let countdown = 10;
-    let timer;
 
     function redirect() {
       window.location.href = redirectUrl;
     }
 
-    if ($button.length && $countdown.length) {
-      timer = setInterval(() => {
-        countdown--;
-        if (countdown <= 0) {
-          clearInterval(timer);
-          redirect();
-        }
-        $countdown.text(`将在 ${countdown} 秒后自动跳转...`);
-      }, 1000);
-
+    if ($button.length) {
       $button.on('click', () => {
-        clearInterval(timer);
         redirect();
       });
     }
