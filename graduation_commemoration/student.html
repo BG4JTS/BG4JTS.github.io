@@ -155,7 +155,7 @@ permalink: /graduation_commemoration/student
       </button>
     </section>
     <div class="dashboard">
-      <!-- 聊天室卡片（本地存储消息） -->
+      <!-- 前往留言板 -->
       <div class="card">
         <div class="card-header">
           <h2 class="card-title">班级留言板</h2>
@@ -163,10 +163,17 @@ permalink: /graduation_commemoration/student
             <i class="fas fa-comments"></i>
           </div>
         </div>
-        <p style="font-size: 0.9rem; color: var(--text-muted); text-align: center; margin-bottom: 20px; padding: 0 20px;">
-          请不要传播暴力、色情、种族等不友善言论。您的留言内容将被公开，请注意保护个人隐私！如出现不良影响，后果自负！！！
-        </p>
-        <div id="waline" style="padding: 0 15px;"></div>
+        <div style="text-align: center; padding: 20px 10px;">
+          <p style="font-size: 1rem; color: var(--text-muted); margin-bottom: 25px;">
+            请不要传播暴力、色情、种族等不友善言论。您的留言内容将被公开，请注意保护个人隐私！如出现不良影响，后果自负！！！
+          </p>
+          <button class="btn" id="agree-and-redirect">
+            <i class="fas fa-check-circle"></i> 我已同意 立即跳转
+          </button>
+          <p id="redirect-countdown" style="font-size: 0.9rem; color: var(--text-muted); margin-top: 15px;">
+            将在 10 秒后自动跳转...
+          </p>
+        </div>
       </div>
       <!-- 记忆游戏卡片 -->
       <div class="card">
@@ -176,8 +183,13 @@ permalink: /graduation_commemoration/student
             <i class="fas fa-gamepad"></i>
           </div>
         </div>
-        <div class="memory-game"></div>
-        <div class="game-stats">
+        <div class="memory-game-container" style="text-align:center;">
+          <button class="btn" id="start-game-btn" style="margin-top: 20px;">
+              <i class="fas fa-play-circle"></i> 开始游戏
+          </button>
+          <div class="memory-game" style="display: none;"></div>
+        </div>
+        <div class="game-stats" style="display: none;">
           <div class="stat">
             <div class="stat-value" id="moves">0</div>
             <div class="stat-label">步数</div>
@@ -217,7 +229,7 @@ permalink: /graduation_commemoration/student
           </div>
         </div>
         <div style="text-align:center; margin: 30px 0;">
-          <button class="btn" onclick="window.location.href='/graduation_commemoration/contact_information.html'">
+          <button class="btn" onclick="window.location.href='/contact_information.html'">
             <i class="fas fa-paper-plane"></i> 查看联系方式
           </button>
         </div>
@@ -249,23 +261,6 @@ permalink: /graduation_commemoration/student
       <p style="color: var(--text-muted); margin-top: 30px;" id="user-id-display">© 2025 小学毕业纪念</p>
     </div>
   </footer>
-  <script src="js/graduation_commemoration.js?v=5"></script>
-  <script type="module">
-    import { init } from 'https://cdn.jsdelivr.net/npm/@waline/client@v3/dist/waline.js';
-
-    init({
-      el: '#waline',
-      serverURL: 'https://pinl-git-main-ew-nbs-projects.vercel.app',
-      path: '/graduation_commemoration/main_board',
-      reaction: true,
-      login: 'disable',
-      meta: ['nick', 'mail'],
-      requiredMeta: ['nick'],
-      lang: 'zh-CN',
-      emoji: [
-        'https://cdn.jsdelivr.net/npm/@waline/emojis@1.2.0/weibo',
-      ],
-    });
-  </script>
+  <script src="js/graduation_commemoration.js?v=6"></script>
 </body>
 </html>

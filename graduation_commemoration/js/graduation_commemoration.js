@@ -21,7 +21,38 @@ $(document).ready(function () {
     }, 1000);
   });
 
-  // 毕业记忆翻牌小游戏
+  // --- 导航至留言板 ---
+  function setupRedirect() {
+    const redirectUrl = 'https://bg4jts.dpdns.org/';
+    const $button = $('#agree-and-redirect');
+    const $countdown = $('#redirect-countdown');
+    let countdown = 10;
+    let timer;
+
+    function redirect() {
+      window.location.href = redirectUrl;
+    }
+
+    if ($button.length && $countdown.length) {
+      timer = setInterval(() => {
+        countdown--;
+        if (countdown <= 0) {
+          clearInterval(timer);
+          redirect();
+        }
+        $countdown.text(`将在 ${countdown} 秒后自动跳转...`);
+      }, 1000);
+
+      $button.on('click', () => {
+        clearInterval(timer);
+        redirect();
+      });
+    }
+  }
+  setupRedirect();
+
+
+  // --- 毕业记忆翻牌小游戏 ---
   const symbols = ['🎓', '📚', '✏️', '🎒', '🏫', '⭐', '❤️', '🎉'];
   const cards = [...symbols, ...symbols];
   let flippedCards = [];
@@ -45,6 +76,12 @@ $(document).ready(function () {
     const $matchesElement = $('#matches');
 
     if (!$gameContainer.length) return;
+
+    // 显示游戏区域
+    $('#start-game-btn').hide();
+    $('.memory-game').show();
+    $('.game-stats').show();
+
 
     $gameContainer.empty();
     const shuffledCards = shuffle([...cards]);
@@ -79,7 +116,10 @@ $(document).ready(function () {
       if (timer <= 0) {
         clearInterval(gameInterval);
         alert('时间到！游戏结束');
-        initGame();
+        // 游戏结束后显示开始按钮
+        $('#start-game-btn').show();
+        $('.memory-game').hide();
+        $('.game-stats').hide();
       }
     }, 1000);
   }
@@ -110,7 +150,10 @@ $(document).ready(function () {
         clearInterval(gameInterval);
         setTimeout(() => {
           alert(`恭喜！你赢了！用时${60 - timer}秒，共${moves}步`);
-          initGame();
+          // 游戏结束后显示开始按钮
+          $('#start-game-btn').show();
+          $('.memory-game').hide();
+          $('.game-stats').hide();
         }, 500);
       }
     } else {
@@ -122,8 +165,8 @@ $(document).ready(function () {
     }
   }
 
-  // DOM加载完毕后初始化游戏
-  initGame();
+  // 点击开始按钮初始化游戏
+  $('#start-game-btn').on('click', initGame);
 
   // 根据URL参数动态设置用户ID
   function setupUserId() {
