@@ -30,11 +30,6 @@ $(document).ready(function () {
   let timer = 60;
   let gameInterval;
 
-  const gameContainer = document.querySelector('.memory-game');
-  const movesElement = document.getElementById('moves');
-  const timerElement = document.getElementById('timer');
-  const matchesElement = document.getElementById('matches');
-
   function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -44,30 +39,28 @@ $(document).ready(function () {
   }
 
   function initGame() {
-    if (!gameContainer) return;
+    const $gameContainer = $('.memory-game');
+    const $movesElement = $('#moves');
+    const $timerElement = $('#timer');
+    const $matchesElement = $('#matches');
 
-    gameContainer.innerHTML = '';
+    if (!$gameContainer.length) return;
+
+    $gameContainer.empty();
     const shuffledCards = shuffle([...cards]);
 
-    shuffledCards.forEach((symbol, index) => {
-      const card = document.createElement('div');
-      card.classList.add('memory-card');
-      card.dataset.symbol = symbol;
-      card.dataset.index = index;
+    shuffledCards.forEach(symbol => {
+      const $card = $('<div>', {
+        'class': 'memory-card',
+        'data-symbol': symbol
+      });
 
-      const front = document.createElement('div');
-      front.classList.add('card-front');
-      front.textContent = symbol;
+      const $front = $('<div>', { class: 'card-front' }).text(symbol);
+      const $back = $('<div>', { class: 'card-back' }).html('<i class="fas fa-question"></i>');
 
-      const back = document.createElement('div');
-      back.classList.add('card-back');
-      back.innerHTML = '<i class="fas fa-question"></i>';
-
-      card.appendChild(front);
-      card.appendChild(back);
-
-      card.addEventListener('click', flipCard);
-      gameContainer.appendChild(card);
+      $card.append($front).append($back);
+      $card.on('click', flipCard);
+      $gameContainer.append($card);
     });
 
     flippedCards = [];
@@ -75,14 +68,14 @@ $(document).ready(function () {
     moves = 0;
     timer = 60;
 
-    movesElement.textContent = moves;
-    timerElement.textContent = timer;
-    matchesElement.textContent = matchedPairs;
+    $movesElement.text(moves);
+    $timerElement.text(timer);
+    $matchesElement.text(matchedPairs);
 
     if (gameInterval) clearInterval(gameInterval);
     gameInterval = setInterval(() => {
       timer--;
-      timerElement.textContent = timer;
+      $timerElement.text(timer);
       if (timer <= 0) {
         clearInterval(gameInterval);
         alert('时间到！游戏结束');
@@ -92,26 +85,25 @@ $(document).ready(function () {
   }
 
   function flipCard() {
-    if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
-      this.classList.add('flipped');
-      flippedCards.push(this);
+    const $card = $(this);
+    if (flippedCards.length < 2 && !$card.hasClass('flipped')) {
+      $card.addClass('flipped');
+      flippedCards.push($card);
 
       if (flippedCards.length === 2) {
         moves++;
-        movesElement.textContent = moves;
+        $('#moves').text(moves);
         checkForMatch();
       }
     }
   }
 
   function checkForMatch() {
-    const [card1, card2] = flippedCards;
-    const symbol1 = card1.dataset.symbol;
-    const symbol2 = card2.dataset.symbol;
+    const [$card1, $card2] = flippedCards;
 
-    if (symbol1 === symbol2) {
+    if ($card1.data('symbol') === $card2.data('symbol')) {
       matchedPairs++;
-      matchesElement.textContent = matchedPairs;
+      $('#matches').text(matchedPairs);
       flippedCards = [];
 
       if (matchedPairs === symbols.length) {
@@ -123,14 +115,14 @@ $(document).ready(function () {
       }
     } else {
       setTimeout(() => {
-        card1.classList.remove('flipped');
-        card2.classList.remove('flipped');
+        $card1.removeClass('flipped');
+        $card2.removeClass('flipped');
         flippedCards = [];
       }, 1000);
     }
   }
 
-  // Initialize the game when the DOM is ready
+  // DOM加载完毕后初始化游戏
   initGame();
 
   // --- 聊天室逻辑 (使用jQuery重构) ---
