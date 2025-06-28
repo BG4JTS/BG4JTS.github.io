@@ -1,5 +1,5 @@
 ---
-layout: contact
+layout: page
 icon: fas fa-address-card
 order: 5
 ---
