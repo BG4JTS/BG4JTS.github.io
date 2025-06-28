@@ -13,6 +13,7 @@ permalink: /graduation_commemoration/student
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/graduation_commemoration.css">
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
   <style>
     body {
       background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
@@ -157,24 +158,12 @@ permalink: /graduation_commemoration/student
       <!-- 聊天室卡片（本地存储消息） -->
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title">班级聊天室</h2>
+          <h2 class="card-title">班级留言板</h2>
           <div class="card-icon">
             <i class="fas fa-comments"></i>
           </div>
         </div>
-        <p style="font-size: 0.9rem; color: var(--text-muted); text-align: center; margin-bottom: 20px;">请不要传播暴力、色情、种族，等不友善言论。如出现任何不良影响，后果自负！请注意您的隐私安全，您发送的信息将会被公开</p>
-        <div class="chat-container">
-          <div class="chat-messages" id="chatMessages"></div>
-          <div class="chat-input-group">
-            <input type="text" id="nicknameInput" placeholder="输入你的昵称..." class="chat-nickname-input">
-            <div class="chat-input">
-              <input type="text" id="chatInput" placeholder="输入消息...">
-              <button id="chatSendBtn">
-                <i class="fas fa-paper-plane"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+        <div id="waline"></div>
       </div>
       <!-- 记忆游戏卡片 -->
       <div class="card">
@@ -257,6 +246,23 @@ permalink: /graduation_commemoration/student
       <p style="color: var(--text-muted); margin-top: 30px;" id="user-id-display">© 2025 小学毕业纪念</p>
     </div>
   </footer>
-  <script src="js/graduation_commemoration.js?v=4"></script>
+  <script src="js/graduation_commemoration.js?v=5"></script>
+  <script type="module">
+    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+
+    init({
+      el: '#waline',
+      serverURL: 'https://pinl-git-main-ew-nbs-projects.vercel.app',
+      path: '/graduation_commemoration/main_board',
+      reaction: true,
+      login: 'disable',
+      meta: ['nick', 'mail'],
+      requiredMeta: ['nick'],
+      lang: 'zh-CN',
+      emoji: [
+        '//unpkg.com/@waline/emojis@1.2.0/weibo',
+      ],
+    });
+  </script>
 </body>
 </html>
