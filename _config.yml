@@ -1,7 +1,7 @@
 # The Site Configuration
 #11
 sass:
-  sass_dir: assets/css
+  style: compressed
 # Import the theme
 theme: jekyll-theme-chirpy
 
@@ -35,13 +35,6 @@ github:
 
 #twitter:
   #username:  # change to your Twitter username
-
-markdown: kramdown
-kramdown:
-  syntax_highlighter: rouge
-  syntax_highlighter_opts:
-    css_class: highlight
-    line_numbers: true
 
 social:
   # Change to your full name.
@@ -208,9 +201,6 @@ defaults:
       layout: page
       permalink: /:title/
 
-sass:
-  style: compressed
-
 compress_html:
   clippings: all
   comments: all
@@ -240,37 +230,10 @@ jekyll-archives:
     tag: /tags/:name/
     category: /categories/:name/
 
-gitalk:
-  clientID: 'your_client_id'
-  clientSecret: 'your_client_secret'
-  repo: 'your_repo'
-  owner: 'your_username'
-  admin: ['your_username']
-  distractionFreeMode: false
-
-
-intensedebate_comments: true
-
-assets:
-  destination: "/assets"
-  compression: false
-
-#kramdown:
-  #input: GFM
-
-  plugins:
-# #  - jekyll-multiple-languages-plugin
-#   - jekyll-minibundle
-#   - jekyll-include-cache
-  - jekyll-analytics
-
-# #-------------Jekyll Minibundl-------------
-# minibundle: true
-# assets_dir: assets
-# compress_level: 3
-
-
-
-#languages:
-#  - en
-#  - zh-CN
+#gitalk:
+#  clientID: 'your_client_id'
+#  clientSecret: 'your_client_secret'
+#  repo: 'your_repo'
+#  owner: 'your_username'
+#  admin: ['your_username']
+#  distractionFreeMode: false

@@ -20,6 +20,8 @@ permalink: /contact_information.html
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 1rem;
+            box-sizing: border-box;
         }
         .contact-card {
             background: rgba(25, 45, 70, 0.8);
@@ -50,6 +52,7 @@ permalink: /contact_information.html
             align-items: center;
             justify-content: center;
             gap: 12px;
+            padding: 8px; /* Add some padding for better hover effect */
         }
         .contact-list i {
             font-size: 1.4em;
@@ -69,17 +72,17 @@ permalink: /contact_information.html
         .back-btn:hover {
             background: linear-gradient(45deg, #0072ff, #00c6ff);
         }
-        .copy-item {
+        .copy-item, #qq-contact {
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        .copy-item:hover {
+        .copy-item:hover, #qq-contact:hover {
             background-color: rgba(0, 198, 255, 0.1);
             border-radius: 8px;
         }
         #copy-toast {
             position: fixed;
-            bottom: 30px;
+            top: -100px; /* Start off-screen */
             left: 50%;
             transform: translateX(-50%);
             background: #00d27a;
@@ -87,7 +90,7 @@ permalink: /contact_information.html
             padding: 12px 24px;
             border-radius: 8px;
             opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s;
+            transition: opacity 0.3s, top 0.4s ease-in-out;
             pointer-events: none;
             z-index: 1000;
         }
@@ -101,14 +104,85 @@ permalink: /contact_information.html
             gap: 15px;
             margin-top: 24px;
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1001; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 300px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .modal-content p {
+            color: #333;
+            margin-top: 15px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        #qq-qrcode {
+            width: 160px;
+            height: 160px;
+            margin: 15px auto;
+            border: 5px solid #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="contact-card">
         <h1>我的联系方式</h1>
         <ul class="contact-list">
-            <li class="copy-item" data-copy="ham_BG4JTS"><i class="fab fa-weixin"></i> 微信：点击复制微信号（注意大小写）</li>
-            <li class="copy-item" data-copy="123456789"><i class="fab fa-qq"></i> QQ：点击复制QQ号</li>
+            <li id="wechat-contact" style="cursor: pointer;"><i class="fab fa-weixin"></i> 微信：点击显示二维码</li>
+            <li id="qq-contact" data-copy="3252132828" style="cursor: pointer;"><i class="fab fa-qq"></i> QQ：点击添加好友</li>
             <li class="copy-item" data-copy="BG4JTS@outlook.com"><i class="fas fa-envelope"></i> 邮箱：点击复制</li>
             <li><i class="fab fa-github"></i> <a href="https://github.com/BG4JTS" target="_blank" rel="noopener noreferrer">点击前往GitHub主页</a></li>
             <li><i class="fas fa-broadcast-tower"></i> <a href="https://www.qrz.com/db/BG4JTS" target="_blank" rel="noopener noreferrer">点击前往QRZ.com主页</a></li>
@@ -117,33 +191,140 @@ permalink: /contact_information.html
         </ul>
         <div class="button-group">
             <button class="back-btn" onclick="window.history.back()"><i class="fas fa-arrow-left"></i> 返回</button>
-            <button class="back-btn" onclick="window.open('https://bg4jts.dpdns.org/', '_blank')"><i class="fas fa-blog"></i> 前往博客</button>
+            <button class="back-btn" onclick="window.open('https://bg4jts.github.io/', '_blank')"><i class="fas fa-blog"></i> 前往博客</button>
         </div>
     </div>
     <div id="copy-toast">已复制到剪贴板</div>
 
+    <!-- QQ Modal -->
+    <div id="qq-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p style="font-weight: bold;">添加QQ好友</p>
+            <button id="qq-direct-link" class="back-btn" style="width: 100%; box-sizing: border-box;">方式一：点击直接添加</button>
+            <p style="color: #666; font-size: 0.9em; margin-top: 20px;">方式二：使用手机QQ扫描二维码</p>
+            <div id="qq-qrcode"></div>
+            <p style="margin-top: 20px;">方式三：复制QQ号：<span id="qq-number-display">3252132828</span></p>
+            <button id="copy-qq-id" class="back-btn" style="padding: 8px 16px; font-size: 0.9em;">复制</button>
+        </div>
+    </div>
+
+    <!-- WeChat Modal -->
+    <div id="wechat-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p style="font-weight: bold;">微信扫码加好友</p>
+            <img src="wx.png" alt="WeChat QR Code">
+            <p>微信号: <span id="wechat-id">ham_BG4JTS</span></p>
+            <button id="copy-wechat-id" class="back-btn" style="margin-top: 10px; padding: 8px 16px; font-size: 0.9em;">复制微信号</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         document.querySelectorAll('.copy-item').forEach(item => {
             item.addEventListener('click', () => {
                 const textToCopy = item.getAttribute('data-copy');
-                if (textToCopy) {
-                    navigator.clipboard.writeText(textToCopy).then(() => {
-                        showToast();
-                    }).catch(err => {
-                        console.error('无法复制文本: ', err);
-                        alert('复制失败！');
-                    });
-                }
+                copyText(textToCopy);
             });
         });
 
-        function showToast() {
+        // QQ Modal Logic
+        const qqModal = document.getElementById('qq-modal');
+        const qqContactLi = document.getElementById('qq-contact');
+        const qqCloseBtn = qqModal.querySelector('.close-btn');
+        const qqNumber = qqContactLi.getAttribute('data-copy');
+        let qrCodeGenerated = false;
+
+        qqContactLi.addEventListener('click', () => {
+            qqModal.classList.add('show');
+            if (!qrCodeGenerated) {
+                new QRCode(document.getElementById("qq-qrcode"), {
+                    text: `mqqapi://card/show_pslcard?src_type=internal&version=1&uin=${qqNumber}&card_type=person&source=sharecard`,
+                    width: 160,
+                    height: 160,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+                qrCodeGenerated = true;
+            }
+        });
+
+        qqCloseBtn.addEventListener('click', () => {
+            qqModal.classList.remove('show');
+        });
+
+        qqModal.addEventListener('click', (event) => {
+            if (event.target == qqModal) {
+                qqModal.classList.remove('show');
+            }
+        });
+
+        document.getElementById('qq-direct-link').addEventListener('click', () => {
+            const uag = navigator.userAgent;
+            const isIPad = uag.match(/(iPad).*OS\s([\d_]+)/);
+            const isMobile = !isIPad && (uag.match(/(iPhone\sOS)\s([\d_]+)/) || uag.match(/(Android)\s+([\d.]+)/));
+
+            let url;
+            if (isMobile) {
+                url = `mqqapi://card/show_pslcard?src_type=internal&version=1&uin=${qqNumber}&card_type=person&source=sharecard`;
+            } else {
+                url = `tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=${qqNumber}`;
+            }
+            window.location.href = url;
+        });
+
+        document.getElementById('copy-qq-id').addEventListener('click', (e) => {
+            e.stopPropagation();
+            copyText(qqNumber, 'QQ号已复制');
+        });
+
+        // WeChat Modal Logic
+        const wechatModal = document.getElementById('wechat-modal');
+        const wechatContactLi = document.getElementById('wechat-contact');
+        const closeBtn = wechatModal.querySelector('.close-btn');
+        const copyWechatBtn = document.getElementById('copy-wechat-id');
+
+        wechatContactLi.addEventListener('click', () => {
+            wechatModal.classList.add('show');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            wechatModal.classList.remove('show');
+        });
+
+        wechatModal.addEventListener('click', (event) => {
+            if (event.target == wechatModal) {
+                wechatModal.classList.remove('show');
+            }
+        });
+
+        copyWechatBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const wechatId = document.getElementById('wechat-id').textContent;
+            copyText(wechatId, '微信号已复制');
+        });
+
+        function copyText(text, message = '已复制到剪贴板') {
+             if (text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast(message);
+                }).catch(err => {
+                    console.error('无法复制文本: ', err);
+                    alert('复制失败！');
+                });
+            }
+        }
+
+        function showToast(message = '已复制到剪贴板') {
             const toast = document.getElementById('copy-toast');
+            toast.textContent = message;
             toast.style.opacity = '1';
-            toast.style.bottom = '40px';
+            toast.style.top = '30px';
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.bottom = '30px';
+                toast.style.top = '-100px';
             }, 2000);
         }
     </script>

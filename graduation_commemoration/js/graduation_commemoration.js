@@ -1,6 +1,6 @@
 $(document).ready(function () {
   // 毕业赠言生成器
-  const wishes = [
+  var wishes = [
     "愿你们像颗种子，勇敢地冲破泥沙，将嫩绿的幼芽伸出地面，指向天空。",
     "带着稚气，带着自信，带着理想上路吧！去迎接人生最美好的青春时光。",
     "六年的时光是生命中一段美好的乐章，愿这成为你们未来成功的序曲！",
@@ -13,25 +13,25 @@ $(document).ready(function () {
     "不要学花儿只把春天等待，要学燕子把春天衔来。"
   ];
   $('#generate-wish').on('click', function () {
-    const $wishElement = $('#wish-text');
-    const randomIndex = Math.floor(Math.random() * wishes.length);
+    var $wishElement = $('#wish-text');
+    var randomIndex = Math.floor(Math.random() * wishes.length);
     $wishElement.text(wishes[randomIndex]).addClass('pulse');
-    setTimeout(() => {
+    setTimeout(function () {
       $wishElement.removeClass('pulse');
     }, 1000);
   });
 
   // --- 导航至留言板 ---
   function setupRedirect() {
-    const redirectUrl = 'https://bg4jts.dpdns.org/';
-    const $button = $('#agree-and-redirect');
+    var redirectUrl = 'https://bg4jts.dpdns.org/';
+    var $button = $('#agree-and-redirect');
 
     function redirect() {
       window.location.href = redirectUrl;
     }
 
     if ($button.length) {
-      $button.on('click', () => {
+      $button.on('click', function () {
         redirect();
       });
     }
@@ -40,47 +40,56 @@ $(document).ready(function () {
 
 
   // --- 毕业记忆翻牌小游戏 ---
-  const symbols = ['🎓', '📚', '✏️', '🎒', '🏫', '⭐', '❤️', '🎉'];
-  const cards = [...symbols, ...symbols];
-  let flippedCards = [];
-  let matchedPairs = 0;
-  let moves = 0;
-  let timer = 60;
-  let gameInterval;
+  var symbols = ['🎓', '📚', '✏️', '🎒', '🏫', '⭐', '❤️', '🎉'];
+  var cards = symbols.concat(symbols); // ES5 compliant way to merge arrays
+  var flippedCards = [];
+  var matchedPairs = 0;
+  var moves = 0;
+  var timer = 60;
+  var gameInterval;
 
   function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
     }
+
     return array;
   }
 
   function initGame() {
-    const $gameContainer = $('.memory-game');
-    const $movesElement = $('#moves');
-    const $timerElement = $('#timer');
-    const $matchesElement = $('#matches');
+    var $gameContainer = $('.memory-game');
+    var $movesElement = $('#moves');
+    var $timerElement = $('#timer');
+    var $matchesElement = $('#matches');
 
     if (!$gameContainer.length) return;
 
     // 显示游戏区域
     $('#start-game-btn').hide();
-    $('.memory-game').show();
-    $('.game-stats').show();
-
+    $('.memory-game').css('display', 'grid');
+    $('.game-stats').css('display', 'flex');
 
     $gameContainer.empty();
-    const shuffledCards = shuffle([...cards]);
+    var shuffledCards = shuffle(cards.slice()); // Use slice to create a copy
 
-    shuffledCards.forEach(symbol => {
-      const $card = $('<div>', {
+    shuffledCards.forEach(function (symbol) {
+      var $card = $('<div>', {
         'class': 'memory-card',
         'data-symbol': symbol
       });
 
-      const $front = $('<div>', { class: 'card-front' }).text(symbol);
-      const $back = $('<div>', { class: 'card-back' }).html('<i class="fas fa-question"></i>');
+      var $front = $('<div>', { class: 'card-front' }).text(symbol);
+      var $back = $('<div>', { class: 'card-back' }).html('<i class="fas fa-question"></i>');
 
       $card.append($front).append($back);
       $card.on('click', flipCard);
@@ -97,7 +106,7 @@ $(document).ready(function () {
     $matchesElement.text(matchedPairs);
 
     if (gameInterval) clearInterval(gameInterval);
-    gameInterval = setInterval(() => {
+    gameInterval = setInterval(function () {
       timer--;
       $timerElement.text(timer);
       if (timer <= 0) {
@@ -105,14 +114,14 @@ $(document).ready(function () {
         alert('时间到！游戏结束');
         // 游戏结束后显示开始按钮
         $('#start-game-btn').show();
-        $('.memory-game').hide();
-        $('.game-stats').hide();
+        $('.memory-game').css('display', 'none');
+        $('.game-stats').css('display', 'none');
       }
     }, 1000);
   }
 
   function flipCard() {
-    const $card = $(this);
+    var $card = $(this);
     if (flippedCards.length < 2 && !$card.hasClass('flipped')) {
       $card.addClass('flipped');
       flippedCards.push($card);
@@ -126,7 +135,8 @@ $(document).ready(function () {
   }
 
   function checkForMatch() {
-    const [$card1, $card2] = flippedCards;
+    var $card1 = flippedCards[0];
+    var $card2 = flippedCards[1];
 
     if ($card1.data('symbol') === $card2.data('symbol')) {
       matchedPairs++;
@@ -135,16 +145,16 @@ $(document).ready(function () {
 
       if (matchedPairs === symbols.length) {
         clearInterval(gameInterval);
-        setTimeout(() => {
-          alert(`恭喜！你赢了！用时${60 - timer}秒，共${moves}步`);
+        setTimeout(function () {
+          alert('恭喜！你赢了！用时' + (60 - timer) + '秒，共' + moves + '步');
           // 游戏结束后显示开始按钮
           $('#start-game-btn').show();
-          $('.memory-game').hide();
-          $('.game-stats').hide();
+          $('.memory-game').css('display', 'none');
+          $('.game-stats').css('display', 'none');
         }, 500);
       }
     } else {
-      setTimeout(() => {
+      setTimeout(function () {
         $card1.removeClass('flipped');
         $card2.removeClass('flipped');
         flippedCards = [];
@@ -156,22 +166,28 @@ $(document).ready(function () {
   $('#start-game-btn').on('click', initGame);
 
   // 根据URL参数动态设置用户ID
+  function getQueryParam(param) {
+    var href = window.location.href;
+    var reg = new RegExp('[?&]' + param + '=([^&#]*)', 'i');
+    var string = reg.exec(href);
+    return string ? string[1] : null;
+  }
+
   function setupUserId() {
-    const idDisplay = document.getElementById('user-id-display');
+    var idDisplay = document.getElementById('user-id-display');
     if (!idDisplay) return;
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-    let displayText = '© 2025 小学毕业纪念';
+    var id = getQueryParam('id');
+    var displayText = '© 2025 小学毕业纪念';
 
     if (id) {
-      const numericId = parseInt(id, 10);
+      var numericId = parseInt(id, 10);
       if (!isNaN(numericId)) {
-        const paddedId = id.padStart(2, '0');
+        var paddedId = id.length < 2 ? '0' + id : id;
         if (numericId >= 1 && numericId <= 3) {
-          displayText += ` | 编号: TEACHER-${paddedId}`;
+          displayText += ' | 编号: TEACHER-' + paddedId;
         } else {
-          displayText += ` | 编号: STUDENT-${paddedId}`;
+          displayText += ' | 编号: STUDENT-' + paddedId;
         }
       }
     }
