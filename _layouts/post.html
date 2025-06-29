@@ -6,8 +6,6 @@ panel_includes:
 tail_includes:
   - related-posts
   - post-nav
-script_includes:
-  - comment
 ---
 
 {% include lang.html %}
@@ -176,15 +174,21 @@ script_includes:
     <!-- .post-tail-bottom -->
   </div>
   <!-- div.post-tail-wrapper -->
-  {% if page.comments %}
-  <div id="utterances-comments"></div>
-  <script src="https://utteranc.es/client.js"
-        repo="BG4JTS/BG4JTS.github.io"
-        issue-term="pathname"
-        label="Comment"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-  </script>
-  {% endif %}
-  </article>
+  {%- if page.comments and site.comments.provider == 'waline' and site.comments.waline.serverURL -%}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@waline/client@v2/dist/waline.css" />
+    <div id="waline" class="mt-5"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@waline/client@v2/dist/waline.js"></script>
+    <script>
+      Waline.init({
+        el: '#waline',
+        serverURL: '{{ site.comments.waline.serverURL }}',
+        lang: '{{ site.lang }}',
+        meta: {{ site.comments.waline.meta | jsonify }},
+        requiredMeta: {{ site.comments.waline.requiredMeta | jsonify }},
+        wordLimit: {{ site.comments.waline.wordLimit | default: 0 }},
+        pageSize: {{ site.comments.waline.pageSize | default: 10 }},
+        reaction: {{ site.comments.waline.reaction | default: false }}
+      });
+    </script>
+  {%- endif -%}
+</article>

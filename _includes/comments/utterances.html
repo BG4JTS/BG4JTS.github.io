@@ -1,0 +1,16 @@
+<!-- _includes/comments/utterances.html -->
+{%- if site.comments.utterances.repo -%}
+<script
+  src="https://utteranc.es/client.js"
+  repo="{{ site.comments.utterances.repo }}"
+  issue-term="{{ site.comments.utterances.issue_term | default: 'pathname' }}"
+  {%- if site.comments.utterances.label -%}
+    label="{{ site.comments.utterances.label }}"
+  {%- endif -%}
+  theme="{{ site.comments.utterances.theme | default: 'github-light' }}"
+  crossorigin="anonymous"
+  async
+></script>
+{%- else -%}
+  <p><strong>Error:</strong> The Utterances repository is not configured. Please set `site.comments.utterances.repo` in `_config.yml`.</p>
+{%- endif -%}

@@ -1,0 +1,38 @@
+<!-- _includes/comments/waline.html -->
+{%- if site.comments.waline.serverURL -%}
+<div id="waline"></div>
+<script>
+  window.Waline = {
+    el: '#waline',
+    serverURL: '{{ site.comments.waline.serverURL }}',
+    lang: '{{ site.lang }}',
+    {%- if site.comments.waline.meta -%}
+    meta: [{% for item in site.comments.waline.meta %}'{{ item }}'{% unless forloop.last %}, {% endunless %}{% endfor %}],
+    {%- endif -%}
+    {%- if site.comments.waline.requiredMeta -%}
+    requiredMeta: [{% for item in site.comments.waline.requiredMeta %}'{{ item }}'{% unless forloop.last %}, {% endunless %}{% endfor %}],
+    {%- endif -%}
+    {%- if site.comments.waline.login -%}
+    login: '{{ site.comments.waline.login }}',
+    {%- endif -%}
+    {%- if site.comments.waline.wordLimit -%}
+    wordLimit: {{ site.comments.waline.wordLimit }},
+    {%- endif -%}
+    {%- if site.comments.waline.pageSize -%}
+    pageSize: {{ site.comments.waline.pageSize }},
+    {%- endif -%}
+    pageview: {{ site.pageviews.provider == 'waline' }},
+    emoji: [
+      'https://cdn.jsdelivr.net/npm/@waline/emojis@1.1.0/weibo',
+      'https://cdn.jsdelivr.net/npm/@waline/emojis@1.1.0/alus',
+      'https://cdn.jsdelivr.net/npm/@waline/emojis@1.1.0/bilibili',
+      'https://cdn.jsdelivr.net/npm/@waline/emojis@1.1.0/qq',
+      'https://cdn.jsdelivr.net/npm/@waline/emojis@1.1.0/tieba',
+      'https://cdn.jsdelivr.net/npm/@waline/emojis@1.1.0/tw-emoji'
+    ]
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@waline/client@v2/dist/waline.js"></script>
+{%- else -%}
+  <p><strong>Error:</strong> The Waline server URL is not configured. Please set `site.comments.waline.serverURL` in `_config.yml`.</p>
+{%- endif -%}
