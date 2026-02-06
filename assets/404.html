@@ -1,0 +1,127 @@
+---
+layout: page
+title: "404: Page not found"
+permalink: /404.html
+---
+
+<style>
+  :root {
+    --animation-length: 0.6s;
+  }
+
+  .not-found {
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .not-found-title {
+    font-size: clamp(5rem, 15vw, 8rem);
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 1rem;
+    color: var(--heading-color);
+    opacity: 0;
+    animation: fadeUp var(--animation-length) ease-out forwards;
+  }
+
+  .not-found-subtitle {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 500;
+    color: var(--heading-color);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp var(--animation-length) ease-out forwards 0.2s;
+  }
+
+  .not-found-text {
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp var(--animation-length) ease-out forwards 0.4s;
+  }
+
+  .home-link {
+    display: inline-block;
+    padding: 0.8rem 1.6rem;
+    background-color: var(--link-color);
+    color: var(--theme-mode);
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    opacity: 0;
+    animation: fadeUp var(--animation-length) ease-out forwards 0.6s;
+  }
+
+  .home-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: var(--theme-mode);
+  }
+
+  .home-link:active {
+    transform: translateY(0);
+  }
+
+  .divider {
+    width: 100px;
+    height: 3px;
+    background: var(--link-color);
+    margin: 2rem auto;
+    border-radius: 2px;
+    opacity: 0;
+    animation: fadeUp var(--animation-length) ease-out forwards 0.3s;
+  }
+
+  .emoji {
+    font-size: 4rem;
+    margin: 2rem 0;
+    display: inline-block;
+    opacity: 0;
+    animation: fadeUp var(--animation-length) ease-out forwards 0.5s,
+               wave 2s infinite 1s;
+    transform-origin: 70% 70%;
+  }
+
+  [data-mode="dark"] .home-link {
+    color: var(--theme-mode);
+  }
+
+  [data-mode="dark"] .home-link:hover {
+    color: var(--theme-mode);
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes wave {
+    0% { transform: rotate(0deg); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+    60% { transform: rotate(0deg); }
+    100% { transform: rotate(0deg); }
+  }
+</style>
+
+<div class="not-found">
+  <h1 class="not-found-title">404</h1>
+  <div class="emoji">🚀</div>
+  <h2 class="not-found-subtitle">Page not found</h2>
+  <div class="divider"></div>
+  <p class="not-found-text">
+    The page you're looking for doesn't exist or has been moved.
+  </p>
+  <a href="https://bg4jts.github.io/" class="home-link">Back to Home</a>
+</div>

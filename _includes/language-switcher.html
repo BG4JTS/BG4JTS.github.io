@@ -1,0 +1,53 @@
+<!-- language-switcher.html -->
+<style>
+  .language-switcher {
+    display: inline-flex;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .lang-button {
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s;
+  }
+
+  .lang-button:hover {
+    background-color: #f0f0f0;
+  }
+
+  .lang-button.active {
+    background-color: #e0e0e0;
+  }
+  </style>
+
+  <div class="language-switcher">
+    <button class="lang-button" onclick="switchLanguage('zh')">中</button>
+    <button class="lang-button" onclick="switchLanguage('en')">en</button>
+  </div>
+
+  <script>
+  function switchLanguage(lang) {
+    const currentPath = window.location.pathname;
+    let newPath;
+
+    if (currentPath.endsWith('/en/') || currentPath.endsWith('/zh/')) {
+      // 如果当前路径已经包含语言后缀，替换它
+      newPath = currentPath.substring(0, currentPath.lastIndexOf('/')) + '/' + lang + '/';
+    } else {
+      // 如果当前路径不包含语言后缀，添加它
+      newPath = currentPath + '/' + lang + '/';
+    }
+
+    // 如果新路径与当前路径相同，导航到默认语言（英文）
+    if (newPath === currentPath) {
+      newPath = currentPath + '/en/';
+    }
+
+    window.location.href = newPath;
+  }
+  </script>

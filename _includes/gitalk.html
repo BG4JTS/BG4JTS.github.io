@@ -1,0 +1,15 @@
+<!-- _includes/gitalk.html -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'your_client_id',
+    clientSecret: 'your_client_secret',
+    repo: 'your_repo',
+    owner: 'your_username',
+    admin: ['your_username'],
+    id: window.location.pathname,
+    distractionFreeMode: false
+  });
+  gitalk.render('gitalk-container');
+</script>
