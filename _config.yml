@@ -158,8 +158,14 @@ baseurl: ""
 # ------------ The following options are not recommended to be modified ------------------
 
 kramdown:
-  footnote_backlink: "&#8617;&#xfe0e;"
   syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: highlight
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 1
 
 collections:
   tabs:

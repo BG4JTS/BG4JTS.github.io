@@ -1,0 +1,17 @@
+
+
+/* 暗黑主题 */
+[data-theme="dark"] {
+  --highlight-bg-color: #151515;
+  --highlighter-rouge-color: #c9def1;
+  --highlight-lineno-color: #808080;
+}
+.highlight {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  pre {
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
