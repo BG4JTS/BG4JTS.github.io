@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>何意为</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'SimSun', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 50%, #eeeeee 100%);
+            background-attachment: fixed;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #1a1a1a;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .controls {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .controls label {
+            font-weight: 600;
+            color: #444444;
+            font-size: 14px;
+        }
+
+        .controls select,
+        .controls input[type="number"] {
+            padding: 10px 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            outline: none;
+            color: #1a1a1a;
+        }
+
+        .controls select:focus,
+        .controls input[type="number"]:focus {
+            border-color: #888888;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .controls select option {
+            background: #ffffff;
+            color: #1a1a1a;
+        }
+
+        .stats {
+            color: #666666;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 10px;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        .pagination button {
+            padding: 12px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            color: #1a1a1a;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .pagination button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            background: #f5f5f5;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .pagination button:active:not(:disabled) {
+            transform: translateY(0);
+            background: #eeeeee;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .page-info {
+            font-size: 14px;
+            color: #666666;
+            min-width: 100px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .pagination button[id^="goBtn"] {
+            padding: 10px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            background: #1a1a1a;
+            color: #ffffff;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .pagination button[id^="goBtn"]:hover {
+            transform: translateY(-2px);
+            background: #333333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .pagination button[id^="goBtn"]:active {
+            transform: translateY(0);
+            background: #444444;
+        }
+
+        .controls button[id="backBtn"] {
+            padding: 12px 24px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            color: #1a1a1a;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .controls button[id="backBtn"]:hover {
+            transform: translateY(-2px);
+            background: #f5f5f5;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .controls button[id="backBtn"]:active {
+            transform: translateY(0);
+            background: #eeeeee;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        th {
+            background: #fafafa;
+            color: #1a1a1a;
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        td {
+            padding: 14px 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            color: #333333;
+            font-size: 15px;
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'SimSun', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        tr:nth-child(even) {
+            background: #fafafa;
+        }
+
+        tr {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+            transform: scale(1.01);
+        }
+
+        tr:hover td:first-child {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .loading-indicator {
+            text-align: center;
+            padding: 30px;
+            color: #888888;
+            display: none;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .loading-indicator.visible {
+            display: block;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .error {
+            color: #444444;
+            background: rgba(0, 0, 0, 0.03);
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #888888;
+            font-weight: 500;
+        }
+
+        .footer {
+            margin-top: 25px;
+            color: #aaaaaa;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* 黑暗模式 */
+        body.dark-mode {
+            background: linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #1a1a1a 100%);
+        }
+
+        body.dark-mode .container {
+            background: rgba(20, 20, 20, 0.85);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        body.dark-mode h1 {
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .controls label {
+            color: #cccccc;
+        }
+
+        body.dark-mode .controls select,
+        body.dark-mode .controls input[type="number"] {
+            background: rgba(30, 30, 30, 0.9);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #e5e5e5;
+        }
+
+        body.dark-mode .controls select:focus,
+        body.dark-mode .controls input[type="number"]:focus {
+            border-color: #666666;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .controls select option {
+            background: #1a1a1a;
+            color: #e5e5e5;
+        }
+
+        body.dark-mode .stats {
+            color: #999999;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        body.dark-mode .pagination button {
+            background: #1a1a1a;
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #e5e5e5;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .pagination button:hover:not(:disabled) {
+            background: #252525;
+        }
+
+        body.dark-mode .pagination button:active:not(:disabled) {
+            background: #2a2a2a;
+        }
+
+        body.dark-mode .pagination button[id^="goBtn"] {
+            background: #f5f5f5;
+            color: #1a1a1a;
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        body.dark-mode .pagination button[id^="goBtn"]:hover {
+            background: #ffffff;
+        }
+
+        body.dark-mode .pagination button[id^="goBtn"]:active {
+            background: #e5e5e5;
+        }
+
+        body.dark-mode .controls button[id="backBtn"],
+        body.dark-mode #themeBtn,
+        body.dark-mode #themeBtn2 {
+            background: #1a1a1a;
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #e5e5e5;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .controls button[id="backBtn"]:hover,
+        body.dark-mode #themeBtn:hover,
+        body.dark-mode #themeBtn2:hover {
+            background: #252525;
+        }
+
+        body.dark-mode .controls button[id="backBtn"]:active,
+        body.dark-mode #themeBtn:active,
+        body.dark-mode #themeBtn2:active {
+            background: #2a2a2a;
+        }
+        
+        body.dark-mode #themeBtn i,
+        body.dark-mode #themeBtn2 i {
+            color: #e5e5e5;
+        }
+        
+        #detailTitleIcon i {
+            font-size: 24px;
+        }
+        
+        body:not(.dark-mode) #detailTitleIcon i {
+            color: #1a1a1a;
+        }
+        
+        body.dark-mode #detailTitleIcon i {
+            color: #f5f5f5;
+        }
+
+        body.dark-mode .page-info {
+            color: #999999;
+        }
+
+        body.dark-mode table {
+            background: #1a1a1a;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        body.dark-mode th {
+            background: #151515;
+            color: #e5e5e5;
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        body.dark-mode td {
+            color: #cccccc;
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode tr:nth-child(even) {
+            background: #171717;
+        }
+
+        body.dark-mode tr:hover {
+            background: #1f1f1f;
+        }
+
+        body.dark-mode tr:hover td:first-child {
+            color: #ffffff;
+        }
+
+        body.dark-mode .loading-indicator {
+            color: #888888;
+        }
+
+        body.dark-mode .error {
+            color: #cccccc;
+            background: rgba(255, 255, 255, 0.03);
+            border-color: #666666;
+        }
+
+        body.dark-mode .footer {
+            color: #666666;
+        }
+
+        /* 关于弹出页面 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-overlay.visible {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 24px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            animation: fadeInScale 0.4s ease-out;
+        }
+
+        body.dark-mode .modal-content {
+            background: rgba(26, 26, 26, 0.95);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #1a1a1a;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        body.dark-mode .modal-header h2 {
+            color: #f5f5f5;
+        }
+
+        .close-btn {
+            padding: 8px 16px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            color: #1a1a1a;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #f5f5f5;
+        }
+
+        body.dark-mode .close-btn {
+            background: #1a1a1a;
+            color: #e5e5e5;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .close-btn:hover {
+            background: #252525;
+        }
+
+        .modal-body {
+            color: #444444;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        body.dark-mode .modal-body {
+            color: #cccccc;
+        }
+
+        .modal-body p {
+            margin-bottom: 16px;
+        }
+
+        .modal-body h3 {
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        body.dark-mode .modal-body h3 {
+            color: #f5f5f5;
+        }
+
+        .about-btn {
+            padding: 12px 24px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            color: #1a1a1a;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .about-btn:hover {
+            transform: translateY(-2px);
+            background: #f5f5f5;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .about-btn {
+            background: #1a1a1a;
+            color: #e5e5e5;
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .about-btn:hover {
+            background: #252525;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>何意为</h1>
+    <div class="controls">
+        <button id="themeBtn" style="padding: 10px 16px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: #ffffff; cursor: pointer; font-size: 18px; transition: all 0.3s;"><i class="bi bi-moon-fill"></i></button>
+        <button id="aboutBtn" class="about-btn"><i class="bi bi-info-circle"></i> 关于</button>
+        <label for="pageSize">每页显示行数：</label>
+        <select id="pageSize">
+            <option value="10">10</option>
+            <option value="20" selected>20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+        </select>
+        <div class="stats" id="stats">已加载 0 行</div>
+        <div class="pagination">
+            <button id="prevBtn" disabled>◀ 上一页</button>
+            <div class="page-info" id="pageInfo">第 1 页</div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <input type="number" id="pageInput" min="1" value="1" style="width: 80px;">
+                <button id="goBtn">跳转</button>
+            </div>
+            <button id="nextBtn" disabled>下一页 ▶</button>
+        </div>
+    </div>
+    <div id="error" class="error" style="display: none;"></div>
+    <div style="overflow-x: auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>汉字组合</th>
+                    <th>Unicode 码点</th>
+                    <th>拼音</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- 动态填充 -->
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination" style="margin-top: 20px;">
+        <button id="prevBtn2" disabled>◀ 上一页</button>
+        <div class="page-info" id="pageInfo2">第 1 页</div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <input type="number" id="pageInput2" min="1" value="1" style="width: 80px;">
+            <button id="goBtn2">跳转</button>
+        </div>
+        <button id="nextBtn2" disabled>下一页 ▶</button>
+    </div>
+    <div id="loading" class="loading-indicator">加载更多数据中...</div>
+    <div class="footer">使用按钮切换页面，自动加载下一个文件</div>
+</div>
+
+<!-- 子页面 -->
+<div id="detailPage" class="container" style="display: none;">
+    <h1><span id="detailTitleIcon">✨</span> 汉字组合详情</h1>
+    <div class="controls">
+        <button id="themeBtn2" style="padding: 10px 16px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: #ffffff; cursor: pointer; font-size: 18px; transition: all 0.3s;"><i class="bi bi-moon-fill"></i></button>
+        <button id="backBtn">◀ 返回列表</button>
+    </div>
+    <div id="detailContent"></div>
+</div>
+
+<!-- 关于弹出页面 -->
+<div id="aboutModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="bi bi-info-circle-fill"></i> 关于</h2>
+            <button class="close-btn" id="closeAboutBtn">关闭</button>
+        </div>
+        <div class="modal-body">
+            <p>欢迎使用何意为！</p>
+            
+            <h3>特点</h3>
+            <p>这个工具包含了组合了何意味的71,839,008个组合。</p>
+            
+            <h3>数据来源</h3>
+            <p>所有数据均来源于：<br>
+               http://www.unicode.org/Public/latest/ucd/Unihan.zip<br>
+               拼音信息：<br>
+               kMandarin</p>
+            
+            <h3>问题</h3>
+            <p>不可避免的原因本项目包含许多生僻字，可能无法全部正常显示</p>
+            
+            <h3>祝你使用愉快！</h3>
+            <p>如果有任何问题或建议，欢迎反馈。</p>
+            <h3>By BG4JTS</h3>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- 配置 ----------
+        const BASE_URL = './data/';  // 同目录
+        const FILE_PREFIX = '';  // 文件名前缀，例如 'combined_' 则文件为 combined_1.txt
+        // 这里我们假设文件名为 1.txt, 2.txt, ... 如果需要 combined_1.txt 可将 FILE_PREFIX 改为 'combined_'
+        // 你可以根据需要修改 FILE_PREFIX 和 FILE_EXT
+        const FILE_EXT = '.txt';
+        // 例如使用 combined_1.txt 时：
+        // const FILE_PREFIX = 'combined_';
+        // const FILE_EXT = '.txt';
+
+        // ---------- 状态 ----------
+        let allRows = [];                // 已加载的所有行（每行为解析后的对象）
+        let currentFileIndex = 1;         // 下一个要尝试加载的文件序号（从1开始）
+        let isLoading = false;            // 是否正在加载数据
+        let hasMore = true;               // 是否还有更多文件（当遇到404时设为false）
+        let startIndex = 0;                // 当前显示起始行索引
+        let pageSize = 20;                 // 每页行数，从select获取
+        let currentDetailIndex = -1;        // 当前显示的详情页索引
+
+        // DOM 元素
+        const mainPage = document.querySelector('.container:first-of-type');
+        const detailPage = document.getElementById('detailPage');
+        const detailContent = document.getElementById('detailContent');
+        const backBtn = document.getElementById('backBtn');
+        const tableBody = document.getElementById('tableBody');
+        const statsDiv = document.getElementById('stats');
+        const aboutBtn = document.getElementById('aboutBtn');
+        const aboutModal = document.getElementById('aboutModal');
+        const closeAboutBtn = document.getElementById('closeAboutBtn');
+        const errorDiv = document.getElementById('error');
+        const loadingDiv = document.getElementById('loading');
+        const pageSizeSelect = document.getElementById('pageSize');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const pageInfo = document.getElementById('pageInfo');
+        const prevBtn2 = document.getElementById('prevBtn2');
+        const nextBtn2 = document.getElementById('nextBtn2');
+        const pageInfo2 = document.getElementById('pageInfo2');
+        const pageInput = document.getElementById('pageInput');
+        const goBtn = document.getElementById('goBtn');
+        const pageInput2 = document.getElementById('pageInput2');
+        const goBtn2 = document.getElementById('goBtn2');
+        const themeBtn = document.getElementById('themeBtn');
+        const themeBtn2 = document.getElementById('themeBtn2');
+        const detailTitleIcon = document.getElementById('detailTitleIcon');
+        
+        let isDarkMode = false;
+        
+        function updateDetailTitleIcon() {
+            detailTitleIcon.innerHTML = '<i class="bi bi-star-fill"></i>';
+        }
+        
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            themeBtn.innerHTML = isDarkMode ? '<i class="bi bi-brightness-low-fill"></i>' : '<i class="bi bi-moon-fill"></i>';
+            themeBtn2.innerHTML = isDarkMode ? '<i class="bi bi-brightness-low-fill"></i>' : '<i class="bi bi-moon-fill"></i>';
+            updateDetailTitleIcon();
+            localStorage.setItem('darkMode', isDarkMode);
+            if (currentDetailIndex >= 0 && detailPage.style.display === 'block') {
+                showDetail(currentDetailIndex);
+            }
+        }
+        
+        function applySavedTheme() {
+            const saved = localStorage.getItem('darkMode');
+            if (saved === 'true') {
+                isDarkMode = true;
+                document.body.classList.add('dark-mode');
+                themeBtn.innerHTML = '<i class="bi bi-brightness-low-fill"></i>';
+                themeBtn2.innerHTML = '<i class="bi bi-brightness-low-fill"></i>';
+            }
+            updateDetailTitleIcon();
+        }
+
+        // ---------- 辅助函数 ----------
+        function showError(msg) {
+            errorDiv.style.display = 'block';
+            errorDiv.textContent = msg;
+        }
+
+        function hideError() {
+            errorDiv.style.display = 'none';
+        }
+
+        // 解析一行文本为对象
+        function parseLine(line) {
+            const parts = line.split('\t');
+            if (parts.length >= 3) {
+                return {
+                    chars: parts[0].trim(),
+                    unicode: parts[1].trim(),
+                    pinyin: parts[2].trim()
+                };
+            }
+            return null;
+        }
+
+        // 加载指定文件的内容，返回行数组（解析后的对象），如果文件不存在返回null
+        async function loadFile(fileNumber) {
+            const fileName = `${FILE_PREFIX}${fileNumber}${FILE_EXT}`;
+            const url = BASE_URL + fileName;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        return null;  // 文件不存在
+                    }
+                    throw new Error(`加载文件 ${fileName} 失败: HTTP ${response.status}`);
+                }
+                // 确保正确处理 UTF-8 编码
+                const arrayBuffer = await response.arrayBuffer();
+                const decoder = new TextDecoder('utf-8');
+                const text = decoder.decode(arrayBuffer);
+                const lines = text.split(/\r?\n/);
+                // 过滤空行并解析
+                const parsed = [];
+                for (let line of lines) {
+                    line = line.trim();
+                    if (line === '' || line.startsWith('汉字')) continue; // 忽略空行和标题行（如果有）
+                    const obj = parseLine(line);
+                    if (obj) parsed.push(obj);
+                }
+                console.log(`加载文件 ${fileName} 成功，共 ${parsed.length} 行`);
+                return parsed;
+            } catch (err) {
+                console.error(err);
+                showError(err.message);
+                return null;
+            }
+        }
+
+        // 加载下一个文件（currentFileIndex 指向的文件），并将解析后的行追加到 allRows
+        async function loadNextFile() {
+            if (isLoading || !hasMore) return false;
+            isLoading = true;
+            loadingDiv.classList.add('visible');
+            hideError();
+
+            const rows = await loadFile(currentFileIndex);
+            if (rows === null) {
+                // 文件不存在，停止加载更多
+                hasMore = false;
+                loadingDiv.classList.remove('visible');
+                isLoading = false;
+                if (currentFileIndex === 1) {
+                    showError('未找到 1.txt 文件，请确保文件与HTML在同一目录。');
+                }
+                return false;
+            }
+
+            // 追加到总数据
+            allRows.push(...rows);
+            currentFileIndex++;
+            isLoading = false;
+            loadingDiv.classList.remove('visible');
+
+            // 如果当前显示范围还未填满当前页，可以自动更新显示（但懒加载触发时一般会需要显示更多）
+            // 我们可以调用 render 根据当前 startIndex 重新渲染
+            render();
+            return true;
+        }
+
+        // 更新按钮状态
+        function updateButtons() {
+            const currentPage = Math.floor(startIndex / pageSize) + 1;
+            const totalPages = Math.ceil(allRows.length / pageSize);
+            
+            // 更新两套按钮的页码
+            pageInfo.textContent = `第 ${currentPage} 页`;
+            pageInfo2.textContent = `第 ${currentPage} 页`;
+            
+            // 更新两套输入框的值
+            pageInput.value = currentPage;
+            pageInput2.value = currentPage;
+            
+            // 更新两套上一页按钮
+            const isFirstPage = startIndex === 0;
+            prevBtn.disabled = isFirstPage;
+            prevBtn2.disabled = isFirstPage;
+            
+            // 更新两套下一页按钮
+            const hasNextData = startIndex + pageSize < allRows.length;
+            const isDisabled = !hasNextData && !hasMore;
+            nextBtn.disabled = isDisabled;
+            nextBtn2.disabled = isDisabled;
+        }
+        
+        // 跳转到指定页
+        async function goToPage(pageNum) {
+            // 计算起始索引
+            const newStart = (pageNum - 1) * pageSize;
+            
+            // 如果需要加载更多数据
+            while (newStart >= allRows.length && hasMore) {
+                const success = await loadNextFile();
+                if (!success) break;
+            }
+            
+            // 确保不超出范围
+            const maxStart = Math.max(0, Math.min(newStart, Math.max(0, allRows.length - 1)));
+            startIndex = maxStart;
+            render();
+        }
+
+        // 渲染当前页数据
+        function render() {
+            const endIndex = Math.min(startIndex + pageSize, allRows.length);
+            const pageData = allRows.slice(startIndex, endIndex);
+
+            // 生成表格行
+            let html = '';
+            for (let i = 0; i < pageData.length; i++) {
+                const row = pageData[i];
+                const globalIndex = startIndex + i;
+                html += `<tr data-index="${globalIndex}">
+                    <td>${escapeHtml(row.chars)}</td>
+                    <td>${escapeHtml(row.unicode)}</td>
+                    <td>${escapeHtml(row.pinyin)}</td>
+                </tr>`;
+            }
+            tableBody.innerHTML = html;
+
+            // 添加点击事件
+            tableBody.querySelectorAll('tr').forEach(tr => {
+                tr.addEventListener('click', () => {
+                    const index = parseInt(tr.dataset.index, 10);
+                    if (!isNaN(index)) {
+                        showDetail(index);
+                    }
+                });
+            });
+
+            // 更新统计信息
+            statsDiv.textContent = `已加载 ${allRows.length} 行，显示 ${startIndex + 1} - ${endIndex}`;
+            
+            // 更新按钮状态
+            updateButtons();
+
+            // 如果需要更多数据，预加载下一个文件
+            if (endIndex + pageSize > allRows.length && hasMore) {
+                loadNextFile().then(success => {
+                    if (success) {
+                        updateButtons();
+                    }
+                });
+            }
+        }
+        
+        // 显示详情页面
+        function showDetail(index) {
+            const row = allRows[index];
+            if (!row) return;
+            
+            const unicodes = row.unicode.split(',');
+            const pinyins = row.pinyin.split(',');
+            const charsArray = row.chars.split('');
+            
+            const bgCard = isDarkMode ? '#1a1a1a' : '#ffffff';
+            const colorText = isDarkMode ? '#f5f5f5' : '#1a1a1a';
+            const colorMuted = isDarkMode ? '#999999' : '#666666';
+            const colorMid = isDarkMode ? '#cccccc' : '#444444';
+            const colorLight = isDarkMode ? '#888888' : '#999999';
+            const shadowCard = isDarkMode ? '0 4px 12px rgba(0, 0, 0, 0.4)' : '0 4px 12px rgba(0, 0, 0, 0.05)';
+            const borderCard = isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.04)';
+            
+            let detailHtml = `
+                <div style="text-align: center; margin-bottom: 40px; animation: fadeInScale 0.6s ease-out;">
+                    <div style="font-size: 100px; font-weight: 800; margin-bottom: 20px; color: ${colorText}; font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'SimSun', sans-serif;">${escapeHtml(row.chars)}</div>
+                    <div style="font-size: 28px; color: ${colorMuted}; font-weight: 500;">${escapeHtml(row.pinyin)}</div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-bottom: 40px;">
+            `;
+            
+            for (let i = 0; i < charsArray.length; i++) {
+                const char = charsArray[i];
+                const unicode = unicodes[i] || '';
+                const pinyin = pinyins[i] || '';
+                const delay = i * 0.1;
+                
+                detailHtml += `
+                    <div style="background: ${bgCard}; padding: 28px 20px; border-radius: 20px; text-align: center; box-shadow: ${shadowCard}; border: 1px solid ${borderCard}; animation: fadeInUp 0.6s ease-out ${delay}s both;">
+                        <div style="font-size: 56px; margin-bottom: 12px; color: ${colorText}; font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'SimSun', sans-serif;">${escapeHtml(char)}</div>
+                        <div style="font-size: 18px; color: ${colorMid}; margin-bottom: 8px; font-weight: 600;">${escapeHtml(pinyin)}</div>
+                        <div style="font-size: 14px; color: ${colorLight}; font-family: 'SF Mono', Monaco, 'Courier New', monospace;">${escapeHtml(unicode)}</div>
+                    </div>
+                `;
+            }
+            
+            detailHtml += `
+                </div>
+                <div style="padding: 30px; background: ${bgCard}; border-radius: 20px; box-shadow: ${shadowCard}; border: 1px solid ${borderCard}; animation: fadeInUp 0.6s ease-out 0.3s both;">
+                    <h3 style="margin-top: 0; margin-bottom: 24px; color: ${colorText}; font-size: 20px; font-weight: 700;">完整信息</h3>
+                    <div style="display: grid; grid-template-columns: 140px 1fr; gap: 16px; font-size: 15px;">
+                        <div style="color: ${colorMuted}; font-weight: 500;">汉字组合</div>
+                        <div style="color: ${colorText}; font-weight: 600; font-size: 18px; font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', 'SimSun', sans-serif;">${escapeHtml(row.chars)}</div>
+                        <div style="color: ${colorMuted}; font-weight: 500;">Unicode</div>
+                        <div style="color: ${colorMid}; font-family: 'SF Mono', Monaco, 'Courier New', monospace;">${escapeHtml(row.unicode)}</div>
+                        <div style="color: ${colorMuted}; font-weight: 500;">拼音</div>
+                        <div style="color: ${colorMid}; font-weight: 500;">${escapeHtml(row.pinyin)}</div>
+                        <div style="color: ${colorMuted}; font-weight: 500;">索引</div>
+                        <div style="color: ${colorText}; font-weight: 600;">#${index + 1}</div>
+                    </div>
+                </div>
+            `;
+            
+            detailContent.innerHTML = detailHtml;
+            
+            // 保存当前索引
+            currentDetailIndex = index;
+            
+            // 更新详情页标题图标
+            updateDetailTitleIcon();
+            
+            // 切换页面显示
+            mainPage.style.display = 'none';
+            detailPage.style.display = 'block';
+        }
+        
+        // 返回列表页面
+        function goBack() {
+            detailPage.style.display = 'none';
+            mainPage.style.display = 'block';
+            currentDetailIndex = -1;
+        }
+        
+        // 打开关于页面
+        function openAbout() {
+            aboutModal.classList.add('visible');
+        }
+        
+        // 关闭关于页面
+        function closeAbout() {
+            aboutModal.classList.remove('visible');
+        }
+
+        // 简单的防XSS转义
+        function escapeHtml(unsafe) {
+            return unsafe.replace(/[&<>"]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                if (m === '"') return '&quot;';
+                return m;
+            });
+        }
+
+        // 重置状态（重新从第一个文件开始加载）
+        async function reset() {
+            allRows = [];
+            currentFileIndex = 1;
+            hasMore = true;
+            startIndex = 0;
+            hideError();
+            // 清空表格，显示加载中
+            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center;">加载中…</td></tr>';
+            statsDiv.textContent = '已加载 0 行';
+            // 加载第一个文件
+            await loadNextFile(); // 加载1.txt
+            // 重置起始页
+            startIndex = 0;
+            render();
+        }
+
+        // 初始化
+        async function init() {
+            // 先应用保存的主题
+            applySavedTheme();
+            
+            // 主题按钮
+            themeBtn.addEventListener('click', toggleTheme);
+            themeBtn2.addEventListener('click', toggleTheme);
+            
+            // 返回按钮
+            backBtn.addEventListener('click', goBack);
+            
+            // 关于按钮
+            aboutBtn.addEventListener('click', openAbout);
+            closeAboutBtn.addEventListener('click', closeAbout);
+            aboutModal.addEventListener('click', (e) => {
+                if (e.target === aboutModal) {
+                    closeAbout();
+                }
+            });
+            
+            pageSize = parseInt(pageSizeSelect.value, 10);
+            pageSizeSelect.addEventListener('change', () => {
+                pageSize = parseInt(pageSizeSelect.value, 10);
+                // 改变每页行数时，重置到第一页
+                startIndex = 0;
+                render();
+            });
+
+            // 上一页按钮
+            prevBtn.addEventListener('click', () => {
+                const newStart = Math.max(0, startIndex - pageSize);
+                if (newStart !== startIndex) {
+                    startIndex = newStart;
+                    render();
+                }
+            });
+
+            // 下一页按钮
+            nextBtn.addEventListener('click', async () => {
+                const newStart = startIndex + pageSize;
+                if (newStart < allRows.length) {
+                    startIndex = newStart;
+                    render();
+                } else if (hasMore) {
+                    // 需要加载更多数据
+                    const success = await loadNextFile();
+                    if (success && newStart < allRows.length) {
+                        startIndex = newStart;
+                        render();
+                    }
+                }
+            });
+
+            // 第二套上一页按钮
+            prevBtn2.addEventListener('click', () => {
+                const newStart = Math.max(0, startIndex - pageSize);
+                if (newStart !== startIndex) {
+                    startIndex = newStart;
+                    render();
+                }
+            });
+
+            // 第二套下一页按钮
+            nextBtn2.addEventListener('click', async () => {
+                const newStart = startIndex + pageSize;
+                if (newStart < allRows.length) {
+                    startIndex = newStart;
+                    render();
+                } else if (hasMore) {
+                    // 需要加载更多数据
+                    const success = await loadNextFile();
+                    if (success && newStart < allRows.length) {
+                        startIndex = newStart;
+                        render();
+                    }
+                }
+            });
+
+            // 第一套跳转按钮和输入框
+            goBtn.addEventListener('click', async () => {
+                const pageNum = parseInt(pageInput.value, 10);
+                if (!isNaN(pageNum) && pageNum >= 1) {
+                    await goToPage(pageNum);
+                }
+            });
+
+            pageInput.addEventListener('keypress', async (e) => {
+                if (e.key === 'Enter') {
+                    const pageNum = parseInt(pageInput.value, 10);
+                    if (!isNaN(pageNum) && pageNum >= 1) {
+                        await goToPage(pageNum);
+                    }
+                }
+            });
+
+            // 第二套跳转按钮和输入框
+            goBtn2.addEventListener('click', async () => {
+                const pageNum = parseInt(pageInput2.value, 10);
+                if (!isNaN(pageNum) && pageNum >= 1) {
+                    await goToPage(pageNum);
+                }
+            });
+
+            pageInput2.addEventListener('keypress', async (e) => {
+                if (e.key === 'Enter') {
+                    const pageNum = parseInt(pageInput2.value, 10);
+                    if (!isNaN(pageNum) && pageNum >= 1) {
+                        await goToPage(pageNum);
+                    }
+                }
+            });
+
+            // 初始加载第一个文件
+            await reset();
+        }
+
+        // 开始
+        init();
+    })();
+</script>
+</body>
+</html>
