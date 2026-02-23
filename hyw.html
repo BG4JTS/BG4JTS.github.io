@@ -592,6 +592,137 @@
         body.dark-mode .about-btn:hover {
             background: #252525;
         }
+
+        .filter-controls {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        body.dark-mode .filter-controls {
+            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .filter-controls label {
+            font-weight: 600;
+            color: #444444;
+            font-size: 14px;
+        }
+
+        body.dark-mode .filter-controls label {
+            color: #cccccc;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #444444;
+            font-size: 14px;
+        }
+
+        body.dark-mode .filter-label {
+            color: #cccccc;
+        }
+
+        .filter-checkbox-group {
+            display: flex;
+            gap: 4px;
+        }
+
+        .filter-checkbox {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .filter-check {
+            display: none;
+        }
+
+        .filter-checkbox span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            background: #ffffff;
+            color: #1a1a1a;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+
+        .filter-checkbox:hover span {
+            border-color: #888888;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .filter-check:checked + span {
+            background: #1a1a1a;
+            color: #ffffff;
+            border-color: #1a1a1a;
+        }
+
+        body.dark-mode .filter-checkbox span {
+            background: #1a1a1a;
+            color: #e5e5e5;
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .filter-checkbox:hover span {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        body.dark-mode .filter-check:checked + span {
+            background: #f5f5f5;
+            color: #1a1a1a;
+            border-color: #f5f5f5;
+        }
+
+        .reset-filter-btn {
+            padding: 10px 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            color: #666666;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .reset-filter-btn:hover {
+            background: #f5f5f5;
+            color: #1a1a1a;
+        }
+
+        body.dark-mode .reset-filter-btn {
+            background: #1a1a1a;
+            color: #999999;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .reset-filter-btn:hover {
+            background: #252525;
+            color: #f5f5f5;
+        }
     </style>
 </head>
 <body>
@@ -618,6 +749,85 @@
             </div>
             <button id="nextBtn" disabled>下一页 ▶</button>
         </div>
+    </div>
+    <div class="filter-controls">
+        <label>过滤音调：</label>
+        <div class="filter-group">
+            <label class="filter-label">he:</label>
+            <div class="filter-checkbox-group">
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="he" data-value="hē" checked>
+                    <span>1</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="he" data-value="hé" checked>
+                    <span>2</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="he" data-value="hě" checked>
+                    <span>3</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="he" data-value="hè" checked>
+                    <span>4</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="he" data-value="he" checked>
+                    <span>轻</span>
+                </label>
+            </div>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">yi:</label>
+            <div class="filter-checkbox-group">
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="yi" data-value="yī" checked>
+                    <span>1</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="yi" data-value="yí" checked>
+                    <span>2</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="yi" data-value="yǐ" checked>
+                    <span>3</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="yi" data-value="yì" checked>
+                    <span>4</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="yi" data-value="yi" checked>
+                    <span>轻</span>
+                </label>
+            </div>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label">wei:</label>
+            <div class="filter-checkbox-group">
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="wei" data-value="wēi" checked>
+                    <span>1</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="wei" data-value="wéi" checked>
+                    <span>2</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="wei" data-value="wěi" checked>
+                    <span>3</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="wei" data-value="wèi" checked>
+                    <span>4</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" class="filter-check" data-filter="wei" data-value="wei" checked>
+                    <span>轻</span>
+                </label>
+            </div>
+        </div>
+        <button class="reset-filter-btn" id="resetFilterBtn">重置</button>
     </div>
     <div id="error" class="error" style="display: none;"></div>
     <div style="overflow-x: auto;">
@@ -706,6 +916,7 @@
         let startIndex = 0;                // 当前显示起始行索引
         let pageSize = 20;                 // 每页行数，从select获取
         let currentDetailIndex = -1;        // 当前显示的详情页索引
+        let currentFilter = null;           // 当前过滤条件：null | 'he' | 'yi' | 'wei'
 
         // DOM 元素
         const mainPage = document.querySelector('.container:first-of-type');
@@ -733,6 +944,8 @@
         const themeBtn = document.getElementById('themeBtn');
         const themeBtn2 = document.getElementById('themeBtn2');
         const detailTitleIcon = document.getElementById('detailTitleIcon');
+        const filterChecks = document.querySelectorAll('.filter-check');
+        const resetFilterBtn = document.getElementById('resetFilterBtn');
         
         let isDarkMode = false;
         
@@ -761,6 +974,93 @@
                 themeBtn2.innerHTML = '<i class="bi bi-brightness-low-fill"></i>';
             }
             updateDetailTitleIcon();
+        }
+
+        // ---------- 过滤函数 ----------
+        function hasAnyFilter() {
+            const selectedFilters = {
+                he: [],
+                yi: [],
+                wei: []
+            };
+            
+            filterChecks.forEach(check => {
+                if (check.checked) {
+                    const filterType = check.dataset.filter;
+                    const filterValue = check.dataset.value;
+                    selectedFilters[filterType].push(filterValue);
+                }
+            });
+            
+            const hasHeFilter = selectedFilters.he.length > 0 && selectedFilters.he.length < 6;
+            const hasYiFilter = selectedFilters.yi.length > 0 && selectedFilters.yi.length < 6;
+            const hasWeiFilter = selectedFilters.wei.length > 0 && selectedFilters.wei.length < 6;
+            
+            return hasHeFilter || hasYiFilter || hasWeiFilter;
+        }
+        
+        function getFilteredRows() {
+            const selectedFilters = {
+                he: [],
+                yi: [],
+                wei: []
+            };
+            
+            filterChecks.forEach(check => {
+                if (check.checked) {
+                    const filterType = check.dataset.filter;
+                    const filterValue = check.dataset.value;
+                    selectedFilters[filterType].push(filterValue);
+                }
+            });
+            
+            const hasHeFilter = selectedFilters.he.length > 0 && selectedFilters.he.length < 6;
+            const hasYiFilter = selectedFilters.yi.length > 0 && selectedFilters.yi.length < 6;
+            const hasWeiFilter = selectedFilters.wei.length > 0 && selectedFilters.wei.length < 6;
+            
+            if (!hasHeFilter && !hasYiFilter && !hasWeiFilter) {
+                return allRows;
+            }
+            
+            return allRows.filter(row => {
+                const pinyins = row.pinyin.split(',');
+                let match = true;
+                
+                if (hasHeFilter && !selectedFilters.he.includes(pinyins[0] || '')) {
+                    match = false;
+                }
+                if (hasYiFilter && !selectedFilters.yi.includes(pinyins[1] || '')) {
+                    match = false;
+                }
+                if (hasWeiFilter && !selectedFilters.wei.includes(pinyins[2] || '')) {
+                    match = false;
+                }
+                
+                return match;
+            });
+        }
+
+        async function applyFilter() {
+            startIndex = 0;
+            
+            if (hasAnyFilter() && hasMore) {
+                let filteredRows = getFilteredRows();
+                while (filteredRows.length < pageSize && hasMore) {
+                    const success = await loadNextFile(false);
+                    if (!success) break;
+                    filteredRows = getFilteredRows();
+                }
+            }
+            
+            render();
+        }
+
+        function resetFilter() {
+            filterChecks.forEach(check => {
+                check.checked = true;
+            });
+            startIndex = 0;
+            render();
         }
 
         // ---------- 辅助函数 ----------
@@ -821,7 +1121,7 @@
         }
 
         // 加载下一个文件（currentFileIndex 指向的文件），并将解析后的行追加到 allRows
-        async function loadNextFile() {
+        async function loadNextFile(autoRender = true) {
             if (isLoading || !hasMore) return false;
             isLoading = true;
             loadingDiv.classList.add('visible');
@@ -847,14 +1147,27 @@
 
             // 如果当前显示范围还未填满当前页，可以自动更新显示（但懒加载触发时一般会需要显示更多）
             // 我们可以调用 render 根据当前 startIndex 重新渲染
-            render();
+            if (autoRender) {
+                render();
+            }
+            
+            // 如果有过滤条件，检查是否需要继续加载更多（仅在自动渲染模式下）
+            if (autoRender && hasMore && hasAnyFilter()) {
+                const filteredRows = getFilteredRows();
+                if (filteredRows.length < startIndex + pageSize + 10) {
+                    // 过滤后的数据不够，继续加载
+                    setTimeout(() => loadNextFile(), 100);
+                }
+            }
+            
             return true;
         }
 
         // 更新按钮状态
         function updateButtons() {
+            const filteredRows = getFilteredRows();
             const currentPage = Math.floor(startIndex / pageSize) + 1;
-            const totalPages = Math.ceil(allRows.length / pageSize);
+            const totalPages = Math.ceil(filteredRows.length / pageSize);
             
             // 更新两套按钮的页码
             pageInfo.textContent = `第 ${currentPage} 页`;
@@ -870,7 +1183,7 @@
             prevBtn2.disabled = isFirstPage;
             
             // 更新两套下一页按钮
-            const hasNextData = startIndex + pageSize < allRows.length;
+            const hasNextData = startIndex + pageSize < filteredRows.length;
             const isDisabled = !hasNextData && !hasMore;
             nextBtn.disabled = isDisabled;
             nextBtn2.disabled = isDisabled;
@@ -882,27 +1195,34 @@
             const newStart = (pageNum - 1) * pageSize;
             
             // 如果需要加载更多数据
-            while (newStart >= allRows.length && hasMore) {
-                const success = await loadNextFile();
+            while (true) {
+                const filteredRows = getFilteredRows();
+                if (newStart < filteredRows.length || !hasMore) {
+                    break;
+                }
+                const success = await loadNextFile(false);
                 if (!success) break;
             }
             
             // 确保不超出范围
-            const maxStart = Math.max(0, Math.min(newStart, Math.max(0, allRows.length - 1)));
+            const filteredRowsFinal = getFilteredRows();
+            const maxStart = Math.max(0, Math.min(newStart, Math.max(0, filteredRowsFinal.length - 1)));
             startIndex = maxStart;
             render();
         }
 
         // 渲染当前页数据
         function render() {
-            const endIndex = Math.min(startIndex + pageSize, allRows.length);
-            const pageData = allRows.slice(startIndex, endIndex);
+            const filteredRows = getFilteredRows();
+            const endIndex = Math.min(startIndex + pageSize, filteredRows.length);
+            const pageData = filteredRows.slice(startIndex, endIndex);
 
             // 生成表格行
             let html = '';
             for (let i = 0; i < pageData.length; i++) {
                 const row = pageData[i];
-                const globalIndex = startIndex + i;
+                const originalIndex = allRows.indexOf(row);
+                const globalIndex = originalIndex >= 0 ? originalIndex : startIndex + i;
                 html += `<tr data-index="${globalIndex}">
                     <td>${escapeHtml(row.chars)}</td>
                     <td>${escapeHtml(row.unicode)}</td>
@@ -922,13 +1242,17 @@
             });
 
             // 更新统计信息
-            statsDiv.textContent = `已加载 ${allRows.length} 行，显示 ${startIndex + 1} - ${endIndex}`;
+            if (hasAnyFilter()) {
+                statsDiv.textContent = `已加载 ${allRows.length} 行，过滤后 ${filteredRows.length} 行，显示 ${startIndex + 1} - ${endIndex}`;
+            } else {
+                statsDiv.textContent = `已加载 ${allRows.length} 行，显示 ${startIndex + 1} - ${endIndex}`;
+            }
             
             // 更新按钮状态
             updateButtons();
 
             // 如果需要更多数据，预加载下一个文件
-            if (endIndex + pageSize > allRows.length && hasMore) {
+            if (endIndex + pageSize > filteredRows.length && hasMore) {
                 loadNextFile().then(success => {
                     if (success) {
                         updateButtons();
@@ -1092,17 +1416,19 @@
 
             // 下一页按钮
             nextBtn.addEventListener('click', async () => {
+                let filteredRows = getFilteredRows();
                 const newStart = startIndex + pageSize;
-                if (newStart < allRows.length) {
+                
+                // 如果有过滤条件，持续加载直到有足够的数据或没有更多文件
+                while (newStart >= filteredRows.length && hasMore) {
+                    const success = await loadNextFile(false);
+                    if (!success) break;
+                    filteredRows = getFilteredRows();
+                }
+                
+                if (newStart < filteredRows.length) {
                     startIndex = newStart;
                     render();
-                } else if (hasMore) {
-                    // 需要加载更多数据
-                    const success = await loadNextFile();
-                    if (success && newStart < allRows.length) {
-                        startIndex = newStart;
-                        render();
-                    }
                 }
             });
 
@@ -1117,19 +1443,29 @@
 
             // 第二套下一页按钮
             nextBtn2.addEventListener('click', async () => {
+                let filteredRows = getFilteredRows();
                 const newStart = startIndex + pageSize;
-                if (newStart < allRows.length) {
+                
+                // 如果有过滤条件，持续加载直到有足够的数据或没有更多文件
+                while (newStart >= filteredRows.length && hasMore) {
+                    const success = await loadNextFile(false);
+                    if (!success) break;
+                    filteredRows = getFilteredRows();
+                }
+                
+                if (newStart < filteredRows.length) {
                     startIndex = newStart;
                     render();
-                } else if (hasMore) {
-                    // 需要加载更多数据
-                    const success = await loadNextFile();
-                    if (success && newStart < allRows.length) {
-                        startIndex = newStart;
-                        render();
-                    }
                 }
             });
+
+            // 过滤复选框
+            filterChecks.forEach(check => {
+                check.addEventListener('change', () => applyFilter());
+            });
+
+            // 重置过滤按钮
+            resetFilterBtn.addEventListener('click', resetFilter);
 
             // 第一套跳转按钮和输入框
             goBtn.addEventListener('click', async () => {
