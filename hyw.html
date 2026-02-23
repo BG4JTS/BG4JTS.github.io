@@ -321,14 +321,16 @@
         }
 
         body.dark-mode .controls select,
-        body.dark-mode .controls input[type="number"] {
+        body.dark-mode .controls input[type="number"],
+        body.dark-mode .controls input[type="text"] {
             background: rgba(30, 30, 30, 0.9);
             border-color: rgba(255, 255, 255, 0.1);
             color: #e5e5e5;
         }
 
         body.dark-mode .controls select:focus,
-        body.dark-mode .controls input[type="number"]:focus {
+        body.dark-mode .controls input[type="number"]:focus,
+        body.dark-mode .controls input[type="text"]:focus {
             border-color: #666666;
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
         }
@@ -731,6 +733,7 @@
     <div class="controls">
         <button id="themeBtn" style="padding: 10px 16px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: #ffffff; cursor: pointer; font-size: 18px; transition: all 0.3s;"><i class="bi bi-moon-fill"></i></button>
         <button id="aboutBtn" class="about-btn"><i class="bi bi-info-circle"></i> 关于</button>
+        <input type="text" id="searchInput" placeholder="搜索汉字或Unicode..." style="padding: 10px 16px; border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; font-size: 14px; background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); transition: all 0.3s; outline: none; min-width: 200px;">
         <label for="pageSize">每页显示行数：</label>
         <select id="pageSize">
             <option value="10">10</option>
@@ -946,6 +949,7 @@
         const detailTitleIcon = document.getElementById('detailTitleIcon');
         const filterChecks = document.querySelectorAll('.filter-check');
         const resetFilterBtn = document.getElementById('resetFilterBtn');
+        const searchInput = document.getElementById('searchInput');
         
         let isDarkMode = false;
         
@@ -1165,7 +1169,17 @@
 
         // 更新按钮状态
         function updateButtons() {
-            const filteredRows = getFilteredRows();
+            const searchTerm = searchInput.value.trim();
+            let filteredRows = getFilteredRows();
+            
+            // 应用搜索过滤
+            if (searchTerm) {
+                filteredRows = filteredRows.filter(row => {
+                    return row.chars.includes(searchTerm) || 
+                           row.unicode.toLowerCase().includes(searchTerm.toLowerCase());
+                });
+            }
+            
             const currentPage = Math.floor(startIndex / pageSize) + 1;
             const totalPages = Math.ceil(filteredRows.length / pageSize);
             
@@ -1184,36 +1198,66 @@
             
             // 更新两套下一页按钮
             const hasNextData = startIndex + pageSize < filteredRows.length;
-            const isDisabled = !hasNextData && !hasMore;
+            const isDisabled = !hasNextData && (!searchTerm ? !hasMore : true);
             nextBtn.disabled = isDisabled;
             nextBtn2.disabled = isDisabled;
         }
         
         // 跳转到指定页
         async function goToPage(pageNum) {
+            const searchTerm = searchInput.value.trim();
             // 计算起始索引
             const newStart = (pageNum - 1) * pageSize;
             
-            // 如果需要加载更多数据
-            while (true) {
-                const filteredRows = getFilteredRows();
-                if (newStart < filteredRows.length || !hasMore) {
-                    break;
+            // 只在没有搜索时才加载更多数据
+            if (!searchTerm) {
+                while (true) {
+                    const filteredRows = getFilteredRows();
+                    if (newStart < filteredRows.length || !hasMore) {
+                        break;
+                    }
+                    const success = await loadNextFile(false);
+                    if (!success) break;
                 }
-                const success = await loadNextFile(false);
-                if (!success) break;
             }
             
             // 确保不超出范围
-            const filteredRowsFinal = getFilteredRows();
+            let filteredRowsFinal = getFilteredRows();
+            
+            // 应用搜索过滤
+            if (searchTerm) {
+                filteredRowsFinal = filteredRowsFinal.filter(row => {
+                    return row.chars.includes(searchTerm) || 
+                           row.unicode.toLowerCase().includes(searchTerm.toLowerCase());
+                });
+            }
+            
             const maxStart = Math.max(0, Math.min(newStart, Math.max(0, filteredRowsFinal.length - 1)));
             startIndex = maxStart;
             render();
         }
 
+        // 高亮搜索结果
+        function highlightText(text, searchTerm) {
+            if (!searchTerm) return escapeHtml(text);
+            const escapedSearch = escapeHtml(searchTerm);
+            const regex = new RegExp(escapedSearch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+            return escapeHtml(text).replace(regex, match => `<span style="background-color: #ffeb3b; color: #000; padding: 0 2px; border-radius: 2px;">${match}</span>`);
+        }
+
         // 渲染当前页数据
         function render() {
-            const filteredRows = getFilteredRows();
+            const searchTerm = searchInput.value.trim();
+            let filteredRows = getFilteredRows();
+            
+            // 应用搜索过滤
+            if (searchTerm) {
+                filteredRows = filteredRows.filter(row => {
+                    return row.chars.includes(searchTerm) || 
+                           row.unicode.toLowerCase().includes(searchTerm.toLowerCase());
+                });
+            }
+            
             const endIndex = Math.min(startIndex + pageSize, filteredRows.length);
             const pageData = filteredRows.slice(startIndex, endIndex);
 
@@ -1224,8 +1268,8 @@
                 const originalIndex = allRows.indexOf(row);
                 const globalIndex = originalIndex >= 0 ? originalIndex : startIndex + i;
                 html += `<tr data-index="${globalIndex}">
-                    <td>${escapeHtml(row.chars)}</td>
-                    <td>${escapeHtml(row.unicode)}</td>
+                    <td>${highlightText(row.chars, searchTerm)}</td>
+                    <td>${highlightText(row.unicode, searchTerm)}</td>
                     <td>${escapeHtml(row.pinyin)}</td>
                 </tr>`;
             }
@@ -1242,8 +1286,16 @@
             });
 
             // 更新统计信息
-            if (hasAnyFilter()) {
-                statsDiv.textContent = `已加载 ${allRows.length} 行，过滤后 ${filteredRows.length} 行，显示 ${startIndex + 1} - ${endIndex}`;
+            if (hasAnyFilter() || searchTerm) {
+                let statsText = `已加载 ${allRows.length} 行`;
+                if (hasAnyFilter()) {
+                    statsText += `，过滤后 ${getFilteredRows().length} 行`;
+                }
+                if (searchTerm) {
+                    statsText += `，搜索后 ${filteredRows.length} 行`;
+                }
+                statsText += `，显示 ${startIndex + 1} - ${endIndex}`;
+                statsDiv.textContent = statsText;
             } else {
                 statsDiv.textContent = `已加载 ${allRows.length} 行，显示 ${startIndex + 1} - ${endIndex}`;
             }
@@ -1251,8 +1303,8 @@
             // 更新按钮状态
             updateButtons();
 
-            // 如果需要更多数据，预加载下一个文件
-            if (endIndex + pageSize > filteredRows.length && hasMore) {
+            // 如果需要更多数据，预加载下一个文件（仅在无搜索时）
+            if (!searchTerm && endIndex + pageSize > filteredRows.length && hasMore) {
                 loadNextFile().then(success => {
                     if (success) {
                         updateButtons();
@@ -1416,14 +1468,32 @@
 
             // 下一页按钮
             nextBtn.addEventListener('click', async () => {
+                const searchTerm = searchInput.value.trim();
                 let filteredRows = getFilteredRows();
+                
+                // 应用搜索过滤
+                if (searchTerm) {
+                    filteredRows = filteredRows.filter(row => {
+                        return row.chars.includes(searchTerm) || 
+                               row.unicode.toLowerCase().includes(searchTerm.toLowerCase());
+                    });
+                }
+                
                 const newStart = startIndex + pageSize;
                 
-                // 如果有过滤条件，持续加载直到有足够的数据或没有更多文件
-                while (newStart >= filteredRows.length && hasMore) {
-                    const success = await loadNextFile(false);
-                    if (!success) break;
-                    filteredRows = getFilteredRows();
+                // 只在没有搜索时才加载更多文件
+                if (!searchTerm) {
+                    while (newStart >= filteredRows.length && hasMore) {
+                        const success = await loadNextFile(false);
+                        if (!success) break;
+                        filteredRows = getFilteredRows();
+                        if (searchTerm) {
+                            filteredRows = filteredRows.filter(row => {
+                                return row.chars.includes(searchTerm) || 
+                                       row.unicode.toLowerCase().includes(searchTerm.toLowerCase());
+                            });
+                        }
+                    }
                 }
                 
                 if (newStart < filteredRows.length) {
@@ -1443,14 +1513,32 @@
 
             // 第二套下一页按钮
             nextBtn2.addEventListener('click', async () => {
+                const searchTerm = searchInput.value.trim();
                 let filteredRows = getFilteredRows();
+                
+                // 应用搜索过滤
+                if (searchTerm) {
+                    filteredRows = filteredRows.filter(row => {
+                        return row.chars.includes(searchTerm) || 
+                               row.unicode.toLowerCase().includes(searchTerm.toLowerCase());
+                    });
+                }
+                
                 const newStart = startIndex + pageSize;
                 
-                // 如果有过滤条件，持续加载直到有足够的数据或没有更多文件
-                while (newStart >= filteredRows.length && hasMore) {
-                    const success = await loadNextFile(false);
-                    if (!success) break;
-                    filteredRows = getFilteredRows();
+                // 只在没有搜索时才加载更多文件
+                if (!searchTerm) {
+                    while (newStart >= filteredRows.length && hasMore) {
+                        const success = await loadNextFile(false);
+                        if (!success) break;
+                        filteredRows = getFilteredRows();
+                        if (searchTerm) {
+                            filteredRows = filteredRows.filter(row => {
+                                return row.chars.includes(searchTerm) || 
+                                       row.unicode.toLowerCase().includes(searchTerm.toLowerCase());
+                            });
+                        }
+                    }
                 }
                 
                 if (newStart < filteredRows.length) {
@@ -1466,6 +1554,12 @@
 
             // 重置过滤按钮
             resetFilterBtn.addEventListener('click', resetFilter);
+
+            // 搜索输入框事件
+            searchInput.addEventListener('input', () => {
+                startIndex = 0;
+                render();
+            });
 
             // 第一套跳转按钮和输入框
             goBtn.addEventListener('click', async () => {
