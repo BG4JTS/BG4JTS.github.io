@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>域名已更换 · 跳转中</title>
+    <style>
+        /* 极简黑白重置 — 无彩色，无渐变，无模糊，无阴影 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #ffffff;           /* 纯白背景 */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            line-height: 1.5;
+            color: #000000;                 /* 纯黑正文 */
+        }
+
+        .card {
+            background: #ffffff;            /* 白底 */
+            border: 2px solid #000000;      /* 黑色粗框，简洁有力 */
+            padding: 2.8rem 2.2rem;
+            max-width: 580px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #000000;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        h1::before {
+            content: "⏳";
+            font-size: 2rem;
+            filter: none;
+            color: #000000;
+        }
+
+        .destination-label {
+            margin: 0.5rem 0 0.25rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #555555;                 /* 中灰色辅助文字 */
+            font-weight: 500;
+        }
+
+        .url-badge {
+            background: #f2f2f2;             /* 极浅灰背景，与白底区分 */
+            border: 1px solid #000000;        /* 黑框 */
+            padding: 0.7rem 1.5rem;
+            display: inline-block;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #000000;                   /* 纯黑网址 */
+            word-break: break-all;
+            margin: 0.75rem 0 0.5rem;
+        }
+
+        .timer-block {
+            margin: 2rem 0 1.8rem;
+        }
+
+        .timer-digit {
+            font-size: 5.2rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #000000;
+            background: transparent;
+            display: inline-block;
+            padding: 0.1rem 1.8rem;
+            border: none;
+            margin-bottom: 0.5rem;
+        }
+
+        .timer-label {
+            font-size: 1.1rem;
+            color: #333333;                     /* 深灰 */
+            font-weight: 450;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            margin: 2.2rem 0 1rem;
+        }
+
+        /* 主按钮 — 黑底白字，悬停反过来（白底黑字+黑框） */
+        .btn-primary {
+            background: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;          /* 黑框 */
+            padding: 0.9rem 2.6rem;
+            font-size: 1.2rem;
+            font-weight: 550;
+            border-radius: 0px;                  /* 直角，极致简洁 */
+            cursor: pointer;
+            transition: 0.1s linear;
+            letter-spacing: 0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: #ffffff;
+            color: #000000;
+            border-color: #000000;
+        }
+
+        .btn-primary:active {
+            opacity: 0.7;
+        }
+
+        .manual-hint {
+            margin-top: 1.8rem;
+            font-size: 0.95rem;
+            color: #555555;                    /* 中灰色 */
+            border-top: 1px solid #000000;      /* 黑色分割线 */
+            padding-top: 1.4rem;
+        }
+
+        .manual-hint a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid #000000;
+        }
+
+        .manual-hint a:hover {
+            border-bottom-width: 2px;
+        }
+
+        noscript {
+            display: block;
+            margin-top: 1.8rem;
+            background: #eeeeee;                /* 浅灰背景提醒 */
+            color: #000000;
+            padding: 1rem 1.2rem;
+            border: 1px solid #000000;
+            font-weight: 500;
+        }
+
+        noscript a {
+            color: #000000;
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        .footer-note {
+            font-size: 0.85rem;
+            color: #777777;                     /* 浅灰脚注 */
+            margin-top: 1.2rem;
+        }
+
+        span {
+            color: currentColor;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>域名已更换 准备跳转</h1>
+        <div class="destination-label">目标地址</div>
+        <div class="url-badge">https://blog.bg4jts.cn</div>
+
+        <!-- 倒计时核心区 -->
+        <div class="timer-block">
+            <div class="timer-digit" id="timerDisplay">5</div>
+            <div class="timer-label">秒后自动跳转</div>
+        </div>
+
+        <!-- 手动操作区：仅保留立即跳转按钮，直接访问按钮已删除 -->
+        <div class="actions">
+            <button class="btn-primary" id="redirectNowBtn">
+                <span>⚡</span> 立即跳转
+            </button>
+        </div>
+
+        <!-- 额外的提示/备用手动方案（依然保留文字链接） -->
+        <div class="manual-hint">
+            ⏱️ 未自动跳转？<a href="https://blog.bg4jts.cn">点击此处直接进入</a>
+        </div>
+
+        <!-- 无JavaScript降级提示 -->
+        <noscript>
+            <div>
+                ⚠️ 您的浏览器未启用 JavaScript，请手动点击链接：<br>
+                <a href="https://blog.bg4jts.cn">https://blog.bg4jts.cn</a>
+            </div>
+        </noscript>
+
+        <div class="footer-note">
+            bg4jts 博客
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            const TARGET_URL = 'https://blog.bg4jts.cn';
+            const timerSpan = document.getElementById('timerDisplay');
+            const redirectBtn = document.getElementById('redirectNowBtn');
+
+            let countdown = 5;
+            timerSpan.textContent = countdown;
+
+            let redirected = false;
+
+            function performRedirect() {
+                if (redirected) return;
+                redirected = true;
+                if (redirectInterval) {
+                    clearInterval(redirectInterval);
+                    redirectInterval = null;
+                }
+                window.location.replace(TARGET_URL);
+            }
+
+            let redirectInterval = setInterval(function() {
+                if (redirected) return;
+                countdown -= 1;
+                timerSpan.textContent = countdown;
+                if (countdown <= 0) {
+                    performRedirect();
+                }
+            }, 1000);
+
+            redirectBtn.addEventListener('click', function() {
+                if (redirected) return;
+                performRedirect();
+            });
+        })();
+    </script>
+</body>
+</html>
